@@ -14,7 +14,6 @@ export function LoginPageInput({
     return (
         <div className="login-page-input-container">
             <span className="login-page-input-title">{title}</span>
-            <br />
             <input
                 type={type}
                 className="login-page-input"
