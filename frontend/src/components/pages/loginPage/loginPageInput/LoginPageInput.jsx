@@ -3,7 +3,7 @@ import './loginPageInput.css';
 export function LoginPageInput({
     type = 'text',
     title,
-    placeHolder,
+    placeholder,
     value,
     onChange,
 }) {
@@ -20,7 +20,7 @@ export function LoginPageInput({
                 className="login-page-input"
                 value={value}
                 onChange={onInputChanged}
-                placeHolder={placeHolder}
+                placeholder={placeholder}
             />
         </div>
     );
