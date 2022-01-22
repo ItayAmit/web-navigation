@@ -2,4 +2,8 @@
     background: #333;
     color: #fff;
     margin-top: 25px;
+    width: fit-content;
+}
+input {
+    border-radius: 5px;
 }
