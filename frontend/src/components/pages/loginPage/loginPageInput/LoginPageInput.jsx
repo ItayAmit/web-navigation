@@ -1,6 +1,6 @@
 import './loginPageInput.css';
 
-export function LoginPageInput({ type, title, value, onChange }) {
+export function LoginPageInput({ type = 'text', title, value, onChange }) {
     const onInputChanged = event => {
         onChange(event.target.value);
     };
