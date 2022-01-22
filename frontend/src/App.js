@@ -1,5 +1,13 @@
+import React from 'react';
+
+import { LoginPage } from './components/pages/loginPage';
+
 function App() {
-  return <div></div>;
+    return (
+        <div>
+            <LoginPage />
+        </div>
+    );
 }
 
 export default App;
