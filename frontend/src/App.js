@@ -8,16 +8,14 @@ import { RegisterPage } from './components/pages/registerPage';
 function App() {
     return (
         <Router>
-            <>
-                <Switch>
-                    <Route path="/register">
-                        <RegisterPage />
-                    </Route>
-                    <Route path="/login">
-                        <LoginPage />
-                    </Route>
-                </Switch>
-            </>
+            <Switch>
+                <Route path="/register">
+                    <RegisterPage />
+                </Route>
+                <Route path="/login">
+                    <LoginPage />
+                </Route>
+            </Switch>
         </Router>
     );
 }
