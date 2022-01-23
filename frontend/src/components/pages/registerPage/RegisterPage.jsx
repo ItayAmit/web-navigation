@@ -4,7 +4,7 @@ import { RegisterPageInput } from './registerPageInput';
 
 import './registerPage.css';
 
-export function LoginPage() {
+export function RegisterPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
