@@ -1,6 +1,29 @@
 .login-page-container {
-    background: #333;
+    background: #444;
     color: #fff;
     text-align: center;
-    margin-top: 150px;
+    width: 30%;
+    height: 40%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+}
+
+.login-page-header {
+    padding-top: 25px;
+}
+
+.login-page-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-page-submit-button {
+    margin-top: 4%;
+    border-radius: 5px;
+    background: #ddd;
+    border-color: #fff;
 }

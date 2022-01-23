@@ -1,9 +1,20 @@
 .login-page-input-container {
-    background: #333;
+    background: #444;
     color: #fff;
-    margin-top: 25px;
+    margin-top: 5%;
     width: fit-content;
+    display: flex;
+    flex-direction: column;
 }
-input {
-    border-radius: 5px;
+
+.login-page-input-title {
+    text-align: left;
+}
+
+.login-page-input {
+    color: #fff;
+    background: #444;
+    outline: none;
+    border: none;
+    border-bottom: 2px #fff solid;
 }

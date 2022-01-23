@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { LoginPageInput } from './loginPageInput';
 
@@ -7,10 +7,6 @@ import './loginPage.css';
 export function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    useEffect(() => {
-        console.table({ username, password });
-    }, [username, password]);
 
     return (
         <div className="login-page-container">
@@ -32,7 +28,9 @@ export function LoginPage() {
                     onChange={setPassword}
                 />
             </div>
-            <div className="login-page-submit"></div>
+            <div className="login-page-submit">
+                <button className="login-page-submit-button">Login</button>
+            </div>
         </div>
     );
 }
