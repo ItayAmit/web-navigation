@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { userApiCommunicator } from '../../../api/userApiCommunicator';
 
-import { RegisterPageInput } from './registerPageInput';
+import { LoginPageInput } from '../../loginPageInput';
 
 import './registerPage.css';
 
@@ -8,19 +9,23 @@ export function RegisterPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const onRegisterClicked = () => {
+        userApiCommunicator.register(username, password);
+    };
+
     return (
         <div className="register-page-container">
             <div className="register-page-header">
                 <span className="register-page-title">Register</span>
             </div>
             <div className="register-page-form">
-                <RegisterPageInput
+                <LoginPageInput
                     title="Username"
                     placeholder="Enter username"
                     value={username}
                     onChange={setUsername}
                 />
-                <RegisterPageInput
+                <LoginPageInput
                     type="password"
                     placeholder="Enter password"
                     title="Password"
@@ -29,7 +34,9 @@ export function RegisterPage() {
                 />
             </div>
             <div className="register-page-submit">
-                <button className="register-page-submit-button">
+                <button
+                    className="register-page-submit-button"
+                    onClick={onRegisterClicked}>
                     Register
                 </button>
             </div>

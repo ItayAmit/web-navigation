@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { userApiCommunicator } from '../../../api/userApiCommunicator';
 
 import { LoginPageInput } from '../../loginPageInput';
 
@@ -7,6 +8,10 @@ import './loginPage.css';
 export function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const onLoginClicked = () => {
+        userApiCommunicator.login(username, password);
+    };
 
     return (
         <div className="login-page-container">
@@ -29,7 +34,11 @@ export function LoginPage() {
                 />
             </div>
             <div className="login-page-submit">
-                <button className="login-page-submit-button">Login</button>
+                <button
+                    className="login-page-submit-button"
+                    onClick={onLoginClicked}>
+                    Login
+                </button>
             </div>
         </div>
     );
