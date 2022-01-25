@@ -1,4 +1,4 @@
-.login-page-input-container {
+.page-input-container {
     background: #444;
     color: #fff;
     margin-top: 5%;
@@ -7,11 +7,11 @@
     flex-direction: column;
 }
 
-.login-page-input-title {
+.page-input-title {
     text-align: left;
 }
 
-.login-page-input {
+.page-input {
     color: #fff;
     background: #444;
     outline: none;

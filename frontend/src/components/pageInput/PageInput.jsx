@@ -1,6 +1,6 @@
-import './loginPageInput.css';
+import './pageInput.css';
 
-export function LoginPageInput({
+export function PageInput({
     type = 'text',
     title,
     placeholder,
@@ -12,11 +12,11 @@ export function LoginPageInput({
     };
 
     return (
-        <div className="login-page-input-container">
-            <span className="login-page-input-title">{title}</span>
+        <div className="page-input-container">
+            <span className="page-input-title">{title}</span>
             <input
                 type={type}
-                className="login-page-input"
+                className="page-input"
                 value={value}
                 onChange={onInputChanged}
                 placeholder={placeholder}

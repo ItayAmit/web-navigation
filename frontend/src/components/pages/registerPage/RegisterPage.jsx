@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { userApiCommunicator } from '../../../api/userApiCommunicator';
 
-import { LoginPageInput } from '../../loginPageInput';
+import { PageInput } from '../../pageInput';
 
 import './registerPage.css';
 
@@ -19,13 +19,13 @@ export function RegisterPage() {
                 <span className="register-page-title">Register</span>
             </div>
             <div className="register-page-form">
-                <LoginPageInput
+                <PageInput
                     title="Username"
                     placeholder="Enter username"
                     value={username}
                     onChange={setUsername}
                 />
-                <LoginPageInput
+                <PageInput
                     type="password"
                     placeholder="Enter password"
                     title="Password"
