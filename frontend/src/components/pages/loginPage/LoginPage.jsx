@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { LoginPageInput } from './loginPageInput';
+import { LoginPageInput } from '../../loginPageInput';
 
 import './loginPage.css';
 
