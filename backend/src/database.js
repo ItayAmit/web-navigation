@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-mongoose.connect('mongodb://127.0.0.1/web-navigation');
+mongoose.connect('mongodb://localhost/web-navigation', { family: 4 });
 
 const userSchema = new Schema({
     username: String,
