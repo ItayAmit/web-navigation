@@ -15,7 +15,7 @@ function App() {
                 <Route path="/login">
                     <LoginPage />
                 </Route>
-                <Route path="/user">
+                <Route path="/user/:id">
                     <UserPage />
                 </Route>
             </Switch>
