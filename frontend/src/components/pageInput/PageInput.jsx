@@ -6,6 +6,7 @@ export function PageInput({
     placeholder,
     value,
     onChange,
+    error = '',
 }) {
     const onInputChanged = event => {
         onChange(event.target.value);
@@ -21,6 +22,7 @@ export function PageInput({
                 onChange={onInputChanged}
                 placeholder={placeholder}
             />
+            <span className="page-input-error">{error}</span>
         </div>
     );
 }

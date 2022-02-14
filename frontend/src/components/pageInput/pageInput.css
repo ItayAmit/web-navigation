@@ -14,7 +14,14 @@
 .page-input {
     color: #fff;
     background: #444;
+    width: 250px;
     outline: none;
     border: none;
     border-bottom: 2px #fff solid;
+}
+
+.page-input-error {
+    color: red;
+    text-align: left;
+    font-size: 8px;
 }
