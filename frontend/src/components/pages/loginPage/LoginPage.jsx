@@ -7,10 +7,28 @@ import './loginPage.css';
 
 export function LoginPage() {
     const [username, setUsername] = useState('');
+    const [usernameError, setUsernameError] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const onLoginClicked = () => {
-        userApiCommunicator.login(username, password);
+        let flag = true;
+
+        if (!username) {
+            setUsernameError('Username cannot be left empty');
+            flag = false;
+        } else {
+            setUsernameError('');
+        }
+
+        if (!password) {
+            setPasswordError('Username cannot be left empty');
+            flag = false;
+        } else {
+            setPasswordError('');
+        }
+
+        if (flag) userApiCommunicator.login(username, password);
     };
 
     return (
@@ -24,6 +42,7 @@ export function LoginPage() {
                     placeholder="Enter username"
                     value={username}
                     onChange={setUsername}
+                    error={usernameError}
                 />
                 <PageInput
                     type="password"
@@ -31,6 +50,7 @@ export function LoginPage() {
                     title="Password"
                     value={password}
                     onChange={setPassword}
+                    error={passwordError}
                 />
             </div>
             <div className="login-page-submit">
