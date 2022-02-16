@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { userApiCommunicator } from '../../../api/userApiCommunicator';
 
 import { PageInput } from '../../pageInput';
@@ -18,6 +19,8 @@ export function RegisterPage() {
     const [lastnameError, setLastnameError] = useState('');
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
+
+    const history = useHistory();
 
     const validateEmail = email => {
         let es = /\S+@\S+\.\S+/;
@@ -71,14 +74,19 @@ export function RegisterPage() {
             setEmailError('');
         }
 
-        if (flag)
-            userApiCommunicator.register(
-                username,
-                password,
-                firstname,
-                lastname,
-                email
-            );
+        if (flag) {
+            userApiCommunicator
+                .register(username, password, firstname, lastname, email)
+                .then(response => {
+                    // console.log(response);
+                    if (response['redirect'])
+                        history.push(`/user/${response.redirect}`);
+                    if (response.msg['user'])
+                        setUsernameError(response.msg.user);
+                    if (response.msg['email'])
+                        setEmailError(response.msg.email);
+                });
+        }
     };
 
     return (
