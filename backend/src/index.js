@@ -25,20 +25,21 @@ app.post('/register', (req, res) => {
             lastname,
             email,
         });
-        if (await User.exists({ username })) {
+        const usernameExists = await User.exists({ username });
+        const emailExists = await User.exists({ email });
+        if (usernameExists || emailExists) {
+            const msg = {};
+            if (usernameExists)
+                msg.user = `User with the username ${username} already exists`;
+            if (emailExists) msg.email = `The email ${email} is already taken`;
             res.status(httpStatus.BAD_REQUEST).json({
-                msg: `User with the username ${username} already exists`,
-            });
-        } else if (await User.exists({ email })) {
-            res.status(httpStatus.BAD_REQUEST).json({
-                msg: `The email ${email} is already taken`,
+                msg,
             });
         } else {
             await user.save();
             res.status(httpStatus.OK).json({
-                msg: 'User has been saved',
+                msg: { user: 'User has been saved' },
                 redirect: `${user.id}`,
-                user,
             });
         }
     });
@@ -51,24 +52,38 @@ app.post('/login', async (req, res) => {
         bcrypt.compare(password, user.password, function (err, result) {
             if (result) {
                 res.status(httpStatus.OK).json({
-                    msg: `User ${username} has logged in`,
+                    msg: { user: `User ${username} has logged in` },
                     redirect: `${user.id}`,
-                    user,
                 });
             } else {
                 res.status(httpStatus.BAD_REQUEST).json({
-                    msg: `Password for user ${username} is incorrect`,
+                    msg: {
+                        password: `Password for user ${username} is incorrect`,
+                    },
                 });
             }
         });
     } else {
         res.status(httpStatus.BAD_REQUEST).json({
-            msg: `User with the username ${username} does not exist`,
+            msg: { user: `User with the username ${username} does not exist` },
         });
     }
 });
 
-app.get('/user', async (req, res) => {});
+app.get('/user', async (req, res) => {
+    const { id } = req.body;
+    if (User.exists({ id })) {
+        const user = await User.findOne({ id });
+        console.log(`User ${user.firstname} has loaded`);
+        res.status(httpStatus.OK).json({
+            user,
+        });
+    } else {
+        res.status(httpStatus.BAD_REQUEST).json({
+            msg: { user: `User with the id ${id} does not exist` },
+        });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
