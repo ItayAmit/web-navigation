@@ -22,7 +22,20 @@
 }
 
 .login-page-submit-button {
+    width: 75px;
     margin-top: 4%;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+    background: #ddd;
+    border-color: #fff;
+}
+
+.login-page-signup-button {
+    width: 75px;
+    margin-top: 4%;
+    margin-right: 5px;
+    margin-left: 5px;
     border-radius: 5px;
     background: #ddd;
     border-color: #fff;
