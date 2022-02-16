@@ -7,19 +7,22 @@ export const apiCommunicator = {
 
 const API_URL = 'http://localhost:5000';
 
-function get(path) {
-    return Axios.get(`${API_URL}/${path}`)
+async function get(path, body) {
+    return await Axios.get(`${API_URL}/${path}`, body)
         .then(response => {
-            console.log(response.data.msg);
+            return response.data;
         })
-        .catch();
+        .catch(error => {
+            return { msg: error.response.data.msg };
+        });
 }
 
-function post(path, body) {
-    return Axios.post(`${API_URL}/${path}`, body)
+async function post(path, body) {
+    return await Axios.post(`${API_URL}/${path}`, body)
         .then(response => {
-            if (response.data.user)
-                window.location = `/user/${response.data.redirect}`;
+            return response.data;
         })
-        .catch();
+        .catch(error => {
+            return { msg: error.response.data.msg };
+        });
 }

@@ -9,11 +9,11 @@ function App() {
     return (
         <Router>
             <Switch>
-                <Route path="/register">
-                    <RegisterPage />
-                </Route>
                 <Route path="/login">
                     <LoginPage />
+                </Route>
+                <Route path="/register">
+                    <RegisterPage />
                 </Route>
                 <Route path="/user/:id">
                     <UserPage />

@@ -11,7 +11,9 @@ function login(username, password) {
         username,
         password,
     };
-    apiCommunicator.post('login', user);
+    return apiCommunicator.post('login', user).then(response => {
+        return response;
+    });
 }
 
 function register(username, password, firstname, lastname, email) {
@@ -22,10 +24,9 @@ function register(username, password, firstname, lastname, email) {
         lastname,
         email,
     };
-    apiCommunicator.post('register', user);
+    return apiCommunicator.post('register', user);
 }
 
 function load(userid) {
-    const user = apiCommunicator.get('load', userid);
-    return user;
+    return apiCommunicator.get('user', userid);
 }
