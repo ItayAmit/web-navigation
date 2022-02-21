@@ -27,6 +27,6 @@ function register(username, password, firstname, lastname, email) {
     return apiCommunicator.post('register', user);
 }
 
-function load(userid) {
-    return apiCommunicator.get('user', userid);
+function load(id) {
+    return apiCommunicator.get(`user/${id}`);
 }
