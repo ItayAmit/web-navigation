@@ -7,8 +7,8 @@ export const apiCommunicator = {
 
 const API_URL = 'http://localhost:5000';
 
-async function get(path, body) {
-    return await Axios.get(`${API_URL}/${path}`, body)
+async function get(path) {
+    return await Axios.get(`${API_URL}/${path}`)
         .then(response => {
             return response.data;
         })
