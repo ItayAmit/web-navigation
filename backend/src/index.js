@@ -70,11 +70,10 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.get('/user', async (req, res) => {
-    const { id } = req.body;
-    if (User.exists({ id })) {
-        const user = await User.findOne({ id });
-        console.log(`User ${user.firstname} has loaded`);
+app.get('/user/:id', async (req, res) => {
+    const id = req.params.id;
+    if (await User.exists({ _id: id })) {
+        const user = await User.findOne({ _id: id });
         res.status(httpStatus.OK).json({
             user,
         });
