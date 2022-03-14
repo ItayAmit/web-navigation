@@ -6,21 +6,21 @@ import { RegisterPage } from './components/pages/registerPage';
 import { UserPage } from './components/pages/userPage';
 
 function App() {
-    return (
-        <Router>
-            <Switch>
-                <Route path="/login">
-                    <LoginPage />
-                </Route>
-                <Route path="/register">
-                    <RegisterPage />
-                </Route>
-                <Route path="/user/:id">
-                    <UserPage />
-                </Route>
-            </Switch>
-        </Router>
-    );
+	return (
+		<Router>
+			<Switch>
+				<Route path='/login'>
+					<LoginPage />
+				</Route>
+				<Route path='/register'>
+					<RegisterPage />
+				</Route>
+				<Route path='/user/:id'>
+					<UserPage />
+				</Route>
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;

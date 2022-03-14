@@ -1,27 +1,28 @@
 .page-input-container {
-    background: #444;
-    color: #fff;
-    margin-top: 5%;
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
+	background: #444;
+	color: #fff;
+	margin-top: 5%;
+	width: 60%;
+	display: flex;
+	flex-direction: column;
 }
 
 .page-input-title {
-    text-align: left;
+	text-align: left;
 }
 
 .page-input {
-    color: #fff;
-    background: #444;
-    width: 250px;
-    outline: none;
-    border: none;
-    border-bottom: 2px #fff solid;
+	color: #fff;
+	background: #444;
+	outline: none;
+	border: none;
+	border-bottom: 2px #fff solid;
+	font-size: 20px;
 }
 
 .page-input-error {
-    color: red;
-    text-align: left;
-    font-size: 8px;
+	color: red;
+	text-align: left;
+	padding-top: 5px;
+	font-size: 15px;
 }
