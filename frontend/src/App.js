@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LoginPage } from './components/pages/loginPage';
 import { RegisterPage } from './components/pages/registerPage';
 import { UserPage } from './components/pages/userPage';
+import { SiteAddPage } from './components/pages/siteAddPage';
 
 function App() {
 	return (
@@ -17,6 +18,9 @@ function App() {
 				</Route>
 				<Route path='/user/:id'>
 					<UserPage />
+				</Route>
+				<Route path='/addsite'>
+					<SiteAddPage />
 				</Route>
 			</Switch>
 		</Router>
