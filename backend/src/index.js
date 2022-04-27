@@ -3,6 +3,7 @@ const cors = require('cors');
 const httpStatus = require('http-status');
 const dotenv = require('dotenv');
 const User = require('./database');
+const Site = require('./database');
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -80,6 +81,33 @@ app.get('/user/:id', async (req, res) => {
 	} else {
 		res.status(httpStatus.BAD_REQUEST).json({
 			msg: { user: `User with the id ${id} does not exist` },
+		});
+	}
+});
+
+app.post('/addsite', async (req, res) => {
+	console.log('got site');
+	const { name, season, district, difficulty, distance, duration } = req.body;
+	const site = new Site({
+		name,
+		season,
+		district,
+		difficulty,
+		distance,
+		duration,
+	});
+	const siteNameExists = await Site.exists({ name });
+	if (siteNameExists) {
+		const msg = {};
+		msg.name = `Site with the name ${name} already exists`;
+		res.status(httpStatus.BAD_REQUEST).json({
+			msg,
+		});
+	} else {
+		await site.save();
+		res.status(httpStatus.OK).json({
+			msg: { site: 'Site has been saved' },
+			redirect: 'holder',
 		});
 	}
 });
