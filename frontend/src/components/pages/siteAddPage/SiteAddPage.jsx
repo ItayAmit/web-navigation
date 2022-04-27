@@ -1,9 +1,15 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { siteApiCommunicator } from '../../../api/siteApiCommunicator';
+
 import { DropDown } from '../../dropDown';
 import { PageInput } from '../../pageInput';
+
 import './siteAdd.css';
 
 export function SiteAddPage() {
+	const history = useHistory();
+
 	const [siteName, setSiteName] = useState('');
 	const [siteNameError, setSiteNameError] = useState('');
 	const [season, setSeason] = useState(-1);
@@ -11,6 +17,7 @@ export function SiteAddPage() {
 	const [difficulty, setDifficulty] = useState(-1);
 	const [distance, setDistance] = useState(-1);
 	const [duration, setDuration] = useState(-1);
+
 	const seasons = [
 		{ string: 'Summer', value: 0 },
 		{ string: 'Autumn', value: 1 },
@@ -40,26 +47,28 @@ export function SiteAddPage() {
 		{ string: 'Between 3 and 4 hours', value: 2 },
 		{ string: 'More than 4 hours', value: 3 },
 	];
-	const onCancelClicked = () => {};
+	const onCancelClicked = () => {
+		history.push(`/login`);
+	};
 	const onSubmitClicked = () => {
-		const flag = true;
+		let flag = true;
 		if ([season, district, difficulty, distance, duration].includes(-1)) {
-			// non-chosen field
+			alert('Please finish configuring the site');
 			flag = false;
 		}
 		if (siteName === '') {
-			// name left empty
+			setSiteNameError('Cannot be left empty');
 			flag = false;
+		} else {
+			setSiteNameError('');
 		}
 		if (flag) {
-			const site = {
-				name: siteName,
-				season,
-				difficulty,
-				district,
-				distance,
-				duration,
-			};
+			siteApiCommunicator
+				.add(siteName, season, district, difficulty, distance, duration)
+				.then(response => {
+					if (response.msg['name']) setSiteNameError(response.msg.name);
+					else history.push('/login');
+				});
 		}
 	};
 	return (
