@@ -7,6 +7,8 @@ import { PageInput } from '../../pageInput';
 import './registerPage.css';
 
 export function RegisterPage() {
+	const history = useHistory();
+
 	const [username, setUsername] = useState('');
 	const [usernameError, setUsernameError] = useState('');
 	const [password, setPassword] = useState('');
@@ -19,8 +21,6 @@ export function RegisterPage() {
 	const [lastnameError, setLastnameError] = useState('');
 	const [email, setEmail] = useState('');
 	const [emailError, setEmailError] = useState('');
-
-	const history = useHistory();
 
 	const validateEmail = email => {
 		let es = /\S+@\S+\.\S+/;
