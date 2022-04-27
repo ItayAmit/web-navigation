@@ -11,4 +11,14 @@ const userSchema = new Schema({
 	email: String,
 });
 
+const siteSchema = new Schema({
+	name: String,
+	season: String,
+	district: String,
+	difficulty: Number,
+	distance: Number,
+	duration: Number,
+});
+
 module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Site', siteSchema);
