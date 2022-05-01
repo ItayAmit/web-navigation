@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { siteApiCommunicator } from '../../../api/siteApiCommunicator';
+import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 
 import { DropDown } from '../../dropDown';
 import { PageInput } from '../../pageInput';
@@ -8,7 +9,8 @@ import { PageInput } from '../../pageInput';
 import './siteAdd.css';
 
 export function SiteAddPage() {
-	const history = useHistory();
+	const navigate = useNavigate();
+	const [userId, setUserId] = useState('');
 
 	const [siteName, setSiteName] = useState('');
 	const [siteNameError, setSiteNameError] = useState('');
@@ -48,7 +50,7 @@ export function SiteAddPage() {
 		{ string: 'More than 4 hours', value: 3 },
 	];
 	const onCancelClicked = () => {
-		history.push(`/login`);
+		navigate(`/login`);
 	};
 	const onSubmitClicked = () => {
 		let flag = true;
@@ -64,13 +66,18 @@ export function SiteAddPage() {
 		}
 		if (flag) {
 			siteApiCommunicator
-				.add(siteName, season, district, difficulty, distance, duration)
+				.add(userId, siteName, season, district, difficulty, distance, duration)
 				.then(response => {
 					if (response.msg['name']) setSiteNameError(response.msg.name);
-					else history.push('/login');
+					else navigate(`/user/${userId}`);
 				});
 		}
 	};
+
+	useEffect(() => {
+		const token = tokens.getToken('userDetails');
+		setUserId(token.userId);
+	}, []);
 	return (
 		<div className='site-add-container'>
 			<div className='site-add-configuration'>
