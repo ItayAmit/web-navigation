@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { LoginPage } from './components/pages/loginPage';
 import { RegisterPage } from './components/pages/registerPage';
@@ -9,20 +9,13 @@ import { SiteAddPage } from './components/pages/siteAddPage';
 function App() {
 	return (
 		<Router>
-			<Switch>
-				<Route path='/login'>
-					<LoginPage />
-				</Route>
-				<Route path='/register'>
-					<RegisterPage />
-				</Route>
-				<Route path='/user/:id'>
-					<UserPage />
-				</Route>
-				<Route path='/addsite'>
-					<SiteAddPage />
-				</Route>
-			</Switch>
+			<Routes>
+				<Route exact path='/' element={<LoginPage />} />
+				<Route exact path='/login' element={<LoginPage />} />
+				<Route exact path='/register' element={<RegisterPage />} />
+				<Route exact path='/user' element={<UserPage />} />
+				<Route exact path='/addsite' element={<SiteAddPage />} />
+			</Routes>
 		</Router>
 	);
 }
