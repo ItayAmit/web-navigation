@@ -7,16 +7,13 @@ import './userPage.css';
 export function UserPage() {
 	const navigate = useNavigate();
 	const [firstname, setFirstname] = useState('Guest');
-	const getUser = userId => {
-		userApiCommunicator.load(userId).then(response => {
-			if (response['user']) setFirstname(response.user.firstname);
-		});
-	};
 	useEffect(() => {
 		const token = tokens.getToken('userDetails');
 		if (!token) navigate('/login');
 		const userId = token.userId;
-		getUser(userId);
+		userApiCommunicator.load(userId).then(response => {
+			if (response['user']) setFirstname(response.user.firstname);
+		});
 	}, []);
 	const onAddSiteClicked = () => {
 		navigate('/addsite');
