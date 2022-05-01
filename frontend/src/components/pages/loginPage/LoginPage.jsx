@@ -12,6 +12,7 @@ export function LoginPage() {
 	const [usernameError, setUsernameError] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState('');
+	const hour = 60 * 60 * 1000;
 
 	const navigate = useNavigate();
 
@@ -37,7 +38,7 @@ export function LoginPage() {
 				if (response['redirect']) {
 					let token = {
 						userId: response.redirect,
-						expireDate: new Date(new Date().getTime() + 1 * 60 * 60 * 1000),
+						expireDate: Date.now() + hour,
 					};
 					tokens.setToken('userDetails', token);
 					navigate('/user');
@@ -52,9 +53,9 @@ export function LoginPage() {
 		let token = tokens.getToken('userDetails');
 		if (!token) return;
 		tokens.removeToken('userDetails');
-		let todaysDate = new Date();
+		let todaysDate = Date.now();
 		if (todaysDate > token.expireDate) return;
-		token.expireDate = new Date(new Date().getTime() + 1 * 60 * 60 * 1000);
+		token.expireDate = Date.now() + hour;
 		tokens.setToken('userDetails', token);
 		navigate('/user');
 	};
