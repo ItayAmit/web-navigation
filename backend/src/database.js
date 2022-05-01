@@ -12,13 +12,19 @@ const userSchema = new Schema({
 });
 
 const siteSchema = new Schema({
+	userid: String,
 	name: String,
-	season: String,
-	district: String,
+	season: Number,
+	district: Number,
 	difficulty: Number,
 	distance: Number,
 	duration: Number,
 });
 
-module.exports = mongoose.model('User', userSchema);
-module.exports = mongoose.model('Site', siteSchema);
+const User = mongoose.model('User', userSchema);
+const Site = mongoose.model('Site', siteSchema);
+
+module.exports = {
+	User,
+	Site,
+};
