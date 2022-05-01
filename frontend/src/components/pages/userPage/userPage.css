@@ -1,16 +1,26 @@
 .user-page-container {
-    background: #444;
-    color: #fff;
-    width: 95%;
-    height: 95%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 5px;
+	background: #444;
+	color: #fff;
+	width: 95%;
+	height: 95%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
 }
 
 .user-page-header {
-    padding-top: 25px;
-    padding-left: 25px;
+	padding-top: 25px;
+	padding-left: 25px;
+}
+
+.user-page-body-navigation-button {
+	width: 100px;
+	height: 30px;
+	margin: 20px;
+	border-radius: 5px;
+	background: #ddd;
+	border-color: #fff;
+	font-size: 20px;
 }
