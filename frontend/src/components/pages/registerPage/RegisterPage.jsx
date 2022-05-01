@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { userApiCommunicator } from '../../../api/userApiCommunicator';
 
 import { PageInput } from '../../pageInput';
@@ -7,7 +7,7 @@ import { PageInput } from '../../pageInput';
 import './registerPage.css';
 
 export function RegisterPage() {
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const [username, setUsername] = useState('');
 	const [usernameError, setUsernameError] = useState('');
@@ -79,7 +79,7 @@ export function RegisterPage() {
 				.register(username, password, firstname, lastname, email)
 				.then(response => {
 					// console.log(response);
-					if (response['redirect']) history.push(`/user/${response.redirect}`);
+					if (response['redirect']) navigate(`/user/${response.redirect}`);
 					if (response.msg['user']) setUsernameError(response.msg.user);
 					if (response.msg['email']) setEmailError(response.msg.email);
 				});
