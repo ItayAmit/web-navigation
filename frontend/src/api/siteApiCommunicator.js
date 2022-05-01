@@ -5,8 +5,9 @@ export const siteApiCommunicator = {
 	find,
 };
 
-function add(name, season, district, difficulty, distance, duration) {
+function add(id, name, season, district, difficulty, distance, duration) {
 	const site = {
+		userid: id,
 		name,
 		season,
 		district,
