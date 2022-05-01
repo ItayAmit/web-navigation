@@ -2,8 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const httpStatus = require('http-status');
 const dotenv = require('dotenv');
-const User = require('./database');
-const Site = require('./database');
+const { User, Site } = require('./database');
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -86,9 +85,10 @@ app.get('/user/:id', async (req, res) => {
 });
 
 app.post('/addsite', async (req, res) => {
-	console.log('got site');
-	const { name, season, district, difficulty, distance, duration } = req.body;
+	const { userid, name, season, district, difficulty, distance, duration } =
+		req.body;
 	const site = new Site({
+		userid,
 		name,
 		season,
 		district,
