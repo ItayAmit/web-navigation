@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { userApiCommunicator } from '../../../api/userApiCommunicator';
+import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 
 import { PageInput } from '../../pageInput';
 
@@ -12,10 +13,10 @@ export function LoginPage() {
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState('');
 
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const onSignUpClicked = () => {
-		history.push('/register');
+		navigate('/register');
 	};
 
 	const onLoginClicked = () => {
@@ -33,14 +34,34 @@ export function LoginPage() {
 
 		if (flag) {
 			userApiCommunicator.login(username, password).then(response => {
-				// console.log(response);
-				if (response['redirect']) history.push(`/user/${response.redirect}`);
-				else if (response.msg['user']) setUsernameError(response.msg.user);
+				if (response['redirect']) {
+					let token = {
+						userId: response.redirect,
+						expireDate: new Date(new Date().getTime() + 1 * 60 * 60 * 1000),
+					};
+					tokens.setToken('userDetails', token);
+					navigate('/user');
+				} else if (response.msg['user']) setUsernameError(response.msg.user);
 				else if (response.msg['password'])
 					setPasswordError(response.msg.password);
 			});
 		}
 	};
+
+	const checkAutoLogin = () => {
+		let token = tokens.getToken('userDetails');
+		if (!token) return;
+		tokens.removeToken('userDetails');
+		let todaysDate = new Date();
+		if (todaysDate > token.expireDate) return;
+		token.expireDate = new Date(new Date().getTime() + 1 * 60 * 60 * 1000);
+		tokens.setToken('userDetails', token);
+		navigate('/user');
+	};
+
+	useEffect(() => {
+		checkAutoLogin();
+	}, []);
 
 	return (
 		<div className='login-page-container'>
