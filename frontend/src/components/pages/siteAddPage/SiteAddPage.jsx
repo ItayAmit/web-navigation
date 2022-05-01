@@ -69,7 +69,7 @@ export function SiteAddPage() {
 				.add(userId, siteName, season, district, difficulty, distance, duration)
 				.then(response => {
 					if (response.msg['name']) setSiteNameError(response.msg.name);
-					else navigate(`/user/${userId}`);
+					else navigate(`/user`);
 				});
 		}
 	};
