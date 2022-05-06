@@ -1,5 +1,7 @@
 .user-page-container {
 	background: #444;
+	display: flex;
+	flex-direction: column;
 	color: #fff;
 	width: 95%;
 	height: 95%;
@@ -16,6 +18,8 @@
 }
 
 .user-page-body-navigation-button {
+	display: flex;
+	flex-direction: column;
 	width: 100px;
 	height: 30px;
 	margin: 20px;
