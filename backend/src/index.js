@@ -2,7 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const httpStatus = require('http-status');
 const dotenv = require('dotenv');
-const { User, Site } = require('./database');
+const {
+	User,
+	Site,
+	District,
+	Season,
+	Difficulty,
+	Distance,
+	Duration,
+	Type,
+} = require('./database');
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -85,8 +94,17 @@ app.get('/user/:id', async (req, res) => {
 });
 
 app.post('/addsite', async (req, res) => {
-	const { userid, name, season, district, difficulty, distance, duration } =
-		req.body;
+	const {
+		userid,
+		name,
+		season,
+		district,
+		difficulty,
+		distance,
+		duration,
+		type,
+		description,
+	} = req.body;
 	const site = new Site({
 		userid,
 		name,
@@ -95,6 +113,8 @@ app.post('/addsite', async (req, res) => {
 		difficulty,
 		distance,
 		duration,
+		type,
+		description,
 	});
 	const siteNameExists = await Site.exists({ name });
 	if (siteNameExists) {
@@ -110,6 +130,48 @@ app.post('/addsite', async (req, res) => {
 			redirect: 'holder',
 		});
 	}
+});
+
+app.get('/districts', async (req, res) => {
+	const districts = await District.find({});
+	res.status(httpStatus.OK).json({
+		districts,
+	});
+});
+
+app.get('/seasons', async (req, res) => {
+	const seasons = await Season.find({});
+	res.status(httpStatus.OK).json({
+		seasons,
+	});
+});
+
+app.get('/difficulties', async (req, res) => {
+	const difficulties = await Difficulty.find({});
+	res.status(httpStatus.OK).json({
+		difficulties,
+	});
+});
+
+app.get('/distances', async (req, res) => {
+	const distances = await Distance.find({});
+	res.status(httpStatus.OK).json({
+		distances,
+	});
+});
+
+app.get('/durations', async (req, res) => {
+	const durations = await Duration.find({});
+	res.status(httpStatus.OK).json({
+		durations,
+	});
+});
+
+app.get('/types', async (req, res) => {
+	const types = await Type.find({});
+	res.status(httpStatus.OK).json({
+		types,
+	});
 });
 
 app.listen(port, () => {
