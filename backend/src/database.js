@@ -15,9 +15,11 @@ const siteSchema = new Schema({
 	userid: String,
 	name: String,
 	season: Number,
+	district: Number,
 	difficulty: Number,
 	distance: Number,
 	duration: Number,
+	type: Number,
 	description: String,
 });
 
