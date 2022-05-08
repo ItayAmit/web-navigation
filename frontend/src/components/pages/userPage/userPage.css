@@ -17,6 +17,13 @@
 	padding-left: 25px;
 }
 
+.user-page-logout {
+	height: 30px;
+	background: #444;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 .user-page-body-navigation-button {
 	display: flex;
 	flex-direction: column;
