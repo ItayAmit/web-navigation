@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userApiCommunicator } from '../../../api/userApiCommunicator';
 import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
+import logout from '../../../images/logout.png';
 import './userPage.css';
 
 export function UserPage() {
@@ -15,6 +16,10 @@ export function UserPage() {
 			if (response['user']) setFirstname(response.user.firstname);
 		});
 	}, []);
+	const onLogoutClicked = () => {
+		tokens.removeToken('userDetails');
+		navigate('/login');
+	};
 	const onNavigateClicked = () => {
 		navigate('/navigate');
 	};
@@ -24,13 +29,15 @@ export function UserPage() {
 	const onAddSiteClicked = () => {
 		navigate('/addsite');
 	};
-	const onRateSiteClicked = () => {
-		navigate('/rate');
-	};
 	return (
 		<div className='user-page-container'>
 			<div className='user-page-header'>
 				<span className='user-page-title'>Welcome back {firstname}</span>
+				<img
+					src={logout}
+					className='user-page-logout'
+					onClick={onLogoutClicked}
+				/>
 			</div>
 			<div className='user-page-body'>
 				<div className='user-page-body-navigation'>
@@ -51,12 +58,6 @@ export function UserPage() {
 						onClick={onAddSiteClicked}
 					>
 						Add Site
-					</button>
-					<button
-						className='user-page-body-navigation-button'
-						onClick={onRateSiteClicked}
-					>
-						Rate Site
 					</button>
 				</div>
 			</div>
