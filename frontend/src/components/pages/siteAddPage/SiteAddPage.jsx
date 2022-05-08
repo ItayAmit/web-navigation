@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { siteApiCommunicator } from '../../../api/siteApiCommunicator';
+import { keyApiCommunicator } from '../../../api/keyApiCommunicator';
 import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 
 import { DropDown } from '../../dropDown';
@@ -19,54 +20,73 @@ export function SiteAddPage() {
 	const [difficulty, setDifficulty] = useState(-1);
 	const [distance, setDistance] = useState(-1);
 	const [duration, setDuration] = useState(-1);
+	const [type, setType] = useState(-1);
+	const [description, setDescription] = useState('');
 
-	const seasons = [
-		{ string: 'Summer', value: 0 },
-		{ string: 'Autumn', value: 1 },
-		{ string: 'Winter', value: 2 },
-		{ string: 'Spring', value: 3 },
-	];
-	const districts = [
-		{ string: 'Central', value: 0 },
-		{ string: 'Northern', value: 1 },
-		{ string: 'Southern', value: 2 },
-		{ string: 'Western', value: 3 },
-		{ string: 'Eastern', value: 4 },
-	];
-	const difficulties = [
-		{ string: 'Easy', value: 0 },
-		{ string: 'Moderate', value: 1 },
-		{ string: 'Challenging', value: 2 },
-	];
-	const distances = [
-		{ string: 'Less than 5 KM', value: 0 },
-		{ string: 'Between 5 and 10 KM', value: 1 },
-		{ string: 'More than 10 KM', value: 2 },
-	];
-	const durations = [
-		{ string: 'Less than 1 hour', value: 0 },
-		{ string: 'Between 1 and 2 hours', value: 1 },
-		{ string: 'Between 3 and 4 hours', value: 2 },
-		{ string: 'More than 4 hours', value: 3 },
-	];
+	const [districts, setDistrics] = useState();
+	const [seasons, setSeasons] = useState();
+	const [difficulties, setDifficulties] = useState();
+	const [distances, setDistances] = useState();
+	const [durations, setDurations] = useState();
+	const [types, setTypes] = useState();
+
+	useEffect(() => {
+		const token = tokens.getToken('userDetails');
+		setUserId(token.userId);
+		keyApiCommunicator.getValuesFromKey('districts').then(response => {
+			setDistrics(response.districts);
+		});
+		keyApiCommunicator.getValuesFromKey('seasons').then(response => {
+			setSeasons(response.seasons);
+		});
+		keyApiCommunicator.getValuesFromKey('difficulties').then(response => {
+			setDifficulties(response.difficulties);
+		});
+		keyApiCommunicator.getValuesFromKey('distances').then(response => {
+			setDistances(response.distances);
+		});
+		keyApiCommunicator.getValuesFromKey('durations').then(response => {
+			setDurations(response.durations);
+		});
+		keyApiCommunicator.getValuesFromKey('types').then(response => {
+			setTypes(response.types);
+		});
+	}, []);
+
+	const onDescriptionChanged = event => {
+		setDescription(event.target.value);
+	};
 	const onCancelClicked = () => {
-		navigate(`/login`);
+		navigate(`/user`);
 	};
 	const onSubmitClicked = () => {
 		let flag = true;
-		if ([season, district, difficulty, distance, duration].includes(-1)) {
+		if ([season, district, difficulty, distance, duration, type].includes(-1)) {
 			alert('Please finish configuring the site');
 			flag = false;
 		}
 		if (siteName === '') {
 			setSiteNameError('Cannot be left empty');
 			flag = false;
+		} else if (description === '') {
+			alert('Site description cannot be left empty');
+			flag = false;
 		} else {
 			setSiteNameError('');
 		}
 		if (flag) {
 			siteApiCommunicator
-				.add(userId, siteName, season, district, difficulty, distance, duration)
+				.add(
+					userId,
+					siteName,
+					season,
+					district,
+					difficulty,
+					distance,
+					duration,
+					type,
+					description
+				)
 				.then(response => {
 					if (response.msg['name']) setSiteNameError(response.msg.name);
 					else navigate(`/user`);
@@ -74,10 +94,19 @@ export function SiteAddPage() {
 		}
 	};
 
-	useEffect(() => {
-		const token = tokens.getToken('userDetails');
-		setUserId(token.userId);
-	}, []);
+	const isInDistrict = (point, district) => {
+		const [lat, lon] = point;
+		const { north, east, south, west } = district;
+		if (lat < south || lat > north) return false;
+		if (lon < east || lon > west) return false;
+		return true;
+	};
+	const determineDistrict = point => {
+		districts.forEach(district => {
+			if (isInDistrict(point, district)) setDistrict(district.key);
+		});
+	};
+
 	return (
 		<div className='site-add-container'>
 			<div className='site-add-configuration'>
@@ -91,11 +120,6 @@ export function SiteAddPage() {
 						error={siteNameError}
 					/>
 					<DropDown title={'Season'} items={seasons} onChange={setSeason} />
-					<DropDown
-						title={'District'}
-						items={districts}
-						onChange={setDistrict}
-					/>
 					<DropDown
 						title={'Difficulty'}
 						items={difficulties}
@@ -111,9 +135,17 @@ export function SiteAddPage() {
 						items={durations}
 						onChange={setDuration}
 					/>
+					<DropDown title={'Type'} items={types} onChange={setType} />
 					<span className='site-add-span'>
 						Add a brief description of the site
 					</span>
+					<textarea
+						className='site-add-description'
+						rows='7'
+						maxLength={250}
+						value={description}
+						onChange={onDescriptionChanged}
+					/>
 				</div>
 				<div className='site-add-map'>
 					<span className='site-add-span'>Choose a location on the map</span>
