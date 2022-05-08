@@ -1,12 +1,7 @@
 .drop-down-container {
 	margin-top: 10px;
-	margin-left: 10px;
 	background: #444;
 	width: 75%;
-	/* border-radius: 5px;
-	border-style: solid;
-	border-color: #666;
-	border-width: 2px; */
 }
 
 .drop-down-header {
@@ -29,6 +24,7 @@
 }
 .drop-down-list {
 	background: #444;
+	margin: 0px;
 }
 .drop-down-list-item {
 	background: #444;
