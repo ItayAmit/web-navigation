@@ -10,13 +10,9 @@
 	border-radius: 5px;
 }
 
-.site-add-span {
-}
-
 .site-add-configuration {
 	display: flex;
 	flex-direction: row;
-	background-color: darkred;
 	height: 80%;
 	text-align: center;
 }
@@ -24,13 +20,26 @@
 .site-add-characteristics {
 	width: 25%;
 	height: 100%;
-	background-color: darkblue;
+	margin-left: 20px;
+}
+
+.site-add-description {
+	width: 90%;
+	color: #fff;
+	background-color: #444;
+	border: 5px;
+	border-color: #888;
+	border-style: solid;
+	border-radius: 5px;
+	resize: none;
+	font-size: 20px;
+	font-family: Arial;
+	max-lines: 10;
 }
 
 .site-add-map {
 	width: 75%;
 	height: 100%;
-	background-color: darkgreen;
 }
 
 .site-add-submition {
@@ -42,7 +51,6 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	background-color: darkcyan;
 }
 
 .site-add-submition-button {
