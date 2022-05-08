@@ -30,16 +30,16 @@ export function DropDown({ title = 'DropDown', items, onChange }) {
 				/>
 			</div>
 			<ul className='drop-down-list' hidden={hidden}>
-				{items.map((item, index) => (
+				{items?.map((item, index) => (
 					<li
 						className='drop-down-list-item'
 						key={index}
 						onClick={() => {
-							onItemClicked(item.value, item.string);
+							onItemClicked(item.key, item.name);
 							setHidden(true);
 						}}
 					>
-						{item.string}
+						{item.name}
 					</li>
 				))}
 			</ul>
