@@ -79,7 +79,7 @@ export function RegisterPage() {
 				.register(username, password, firstname, lastname, email)
 				.then(response => {
 					// console.log(response);
-					if (response['redirect']) navigate(`/user/${response.redirect}`);
+					if (response['redirect']) navigate('/user');
 					if (response.msg['user']) setUsernameError(response.msg.user);
 					if (response.msg['email']) setEmailError(response.msg.email);
 				});
