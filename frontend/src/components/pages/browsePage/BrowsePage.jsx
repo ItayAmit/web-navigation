@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { keyApiCommunicator } from '../../../api/keyApiCommunicator';
+import { siteApiCommunicator } from '../../../api/siteApiCommunicator';
 import { DropDown } from '../../dropDown';
+import { SiteCard } from '../../siteCard';
 import './browsePage.css';
 
 export function BrowsePage() {
@@ -10,6 +12,7 @@ export function BrowsePage() {
 	const [distance, setDistance] = useState(-1);
 	const [duration, setDuration] = useState(-1);
 	const [type, setType] = useState(-1);
+	const [sites, setSites] = useState();
 
 	const [districts, setDistrics] = useState();
 	const [seasons, setSeasons] = useState();
@@ -17,6 +20,9 @@ export function BrowsePage() {
 	const [distances, setDistances] = useState();
 	const [durations, setDurations] = useState();
 	const [types, setTypes] = useState();
+
+	const [selectedSite, setSelectedSite] = useState();
+	const [highlight, setHighlight] = useState(-1);
 
 	useEffect(() => {
 		keyApiCommunicator.getValuesFromKey('districts').then(response => {
@@ -39,12 +45,30 @@ export function BrowsePage() {
 		});
 	}, []);
 
+	useEffect(() => {
+		siteApiCommunicator
+			.find(season, district, difficulty, distance, duration, type)
+			.then(response => {
+				setSites(response.sites);
+			});
+	}, [season, district, difficulty, distance, duration, type]);
+
+	const setSelectedCard = (siteid, number) => {
+		setSelectedSite(siteid);
+		setHighlight(number);
+	};
+
 	return (
 		<div className='browse-site-container'>
 			<div className='browse-site-body'>
 				<div className='browse-site-filters'>
 					<span className='browse-site-span'>Apply filters</span>
 					<DropDown title={'Season'} items={seasons} onChange={setSeason} />
+					<DropDown
+						title={'District'}
+						items={districts}
+						onChange={setDistrict}
+					/>
 					<DropDown
 						title={'Difficulty'}
 						items={difficulties}
@@ -62,7 +86,23 @@ export function BrowsePage() {
 					/>
 					<DropDown title={'Type'} items={types} onChange={setType} />
 				</div>
-				<div className='browse-site-list'></div>
+				<div className='browse-site-list'>
+					{sites?.map((site, index) => (
+						<SiteCard
+							key={index}
+							number={index}
+							site={site}
+							onClick={setSelectedCard}
+							highlighted={highlight === index}
+							districts={districts}
+							seasons={seasons}
+							difficulties={difficulties}
+							distances={distances}
+							durations={durations}
+							types={types}
+						/>
+					))}
+				</div>
 			</div>
 			<div className='browse-site-submition'></div>
 		</div>
