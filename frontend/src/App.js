@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import { HomePage } from './components/pages/homePage';
 import { LoginPage } from './components/pages/loginPage';
 import { RegisterPage } from './components/pages/registerPage';
 import { UserPage } from './components/pages/userPage';
@@ -11,7 +12,8 @@ function App() {
 	return (
 		<Router>
 			<Routes>
-				<Route exact path='/' element={<LoginPage />} />
+				<Route exact path='/' element={<HomePage />} />
+				<Route exact path='/home' element={<HomePage />} />
 				<Route exact path='/login' element={<LoginPage />} />
 				<Route exact path='/register' element={<RegisterPage />} />
 				<Route exact path='/user' element={<UserPage />} />
