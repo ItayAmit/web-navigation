@@ -57,6 +57,7 @@ export function LoginPage() {
 		if (todaysDate > token.expireDate) return;
 		token.expireDate = Date.now() + hour;
 		tokens.setToken('userDetails', token);
+		alert('User is already logged in');
 		navigate('/user');
 	};
 
