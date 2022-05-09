@@ -15,12 +15,16 @@
 	flex-direction: row;
 	height: 80%;
 	text-align: center;
+	border-bottom: solid;
+	border-color: #666;
 }
 
 .site-add-characteristics {
 	width: 25%;
 	height: 100%;
 	margin-left: 20px;
+	border-right: solid;
+	border-color: #666;
 }
 
 .site-add-description {
