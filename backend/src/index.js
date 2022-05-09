@@ -174,6 +174,35 @@ app.get('/types', async (req, res) => {
 	});
 });
 
+app.get('/sites', async (req, res) => {
+	const { season, district, difficulty, distance, duration, type } = req.query;
+	const intSeason = parseInt(season);
+	const intDistrict = parseInt(district);
+	const intDifficulty = parseInt(difficulty);
+	const intDistance = parseInt(distance);
+	const intDuration = parseInt(duration);
+	const intType = parseInt(type);
+
+	console.log(intDistance);
+
+	let sites = await Site.find({});
+
+	if (intSeason !== -1) sites = sites.filter(site => site.season === intSeason);
+	if (intDistrict !== -1)
+		sites = sites.filter(site => site.district === intDistrict);
+	if (intDifficulty !== -1)
+		sites = sites.filter(site => site.difficulty === intDifficulty);
+	if (intDistance !== -1)
+		sites = sites.filter(site => site.distance === intDistance);
+	if (intDuration !== -1)
+		sites = sites.filter(site => site.duration === intDuration);
+	if (intType !== -1) sites = sites.filter(site => site.type === intType);
+
+	res.status(httpStatus.OK).json({
+		sites,
+	});
+});
+
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`);
 });
