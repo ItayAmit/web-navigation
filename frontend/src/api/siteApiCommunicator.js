@@ -27,10 +27,12 @@ function add(
 		type,
 		description,
 	};
-	console.log(site);
 	return apiCommunicator.post('addsite', site).then(response => {
 		return response;
 	});
 }
 
-function find(site) {}
+function find(season, district, difficulty, distance, duration, type) {
+	const params = { season, district, difficulty, distance, duration, type };
+	return apiCommunicator.getWithParams('sites', params);
+}
