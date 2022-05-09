@@ -1,0 +1,23 @@
+.site-card-container {
+	border-style: solid;
+	border-color: #444;
+	background: #555;
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+}
+
+.site-card-title {
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+.site-card-characteristic {
+	font-size: 15px;
+	margin-right: 10px;
+	border-bottom: 1px solid;
+}
+
+.site-card-row {
+	margin-bottom: 0px;
+}
