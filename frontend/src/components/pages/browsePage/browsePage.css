@@ -20,17 +20,19 @@
 .browse-site-filters {
 	width: 25%;
 	height: 100%;
-	background-color: darkblue;
+	border-right: solid;
+	border-color: #666;
 }
 
 .browse-site-list {
 	width: 75%;
 	height: 100%;
-	background-color: darkcyan;
+	overflow-y: auto;
 }
 
 .browse-site-submition {
 	height: 20%;
 	width: 100%;
-	background-color: darkred;
+	border-top: solid;
+	border-color: #666;
 }
