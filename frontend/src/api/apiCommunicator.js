@@ -4,6 +4,7 @@ export const apiCommunicator = {
 	get,
 	getWithParams,
 	post,
+	put,
 };
 
 const API_URL = 'http://localhost:5000';
@@ -30,6 +31,16 @@ async function getWithParams(path, params) {
 
 async function post(path, body) {
 	return await Axios.post(`${API_URL}/${path}`, body)
+		.then(response => {
+			return response.data;
+		})
+		.catch(error => {
+			return { msg: error.response.data.msg };
+		});
+}
+
+async function put(path, body) {
+	return await Axios.put(`${API_URL}/${path}`, body)
 		.then(response => {
 			return response.data;
 		})
