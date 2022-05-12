@@ -1,0 +1,16 @@
+.rate-page-container {
+	background: #444;
+	color: #fff;
+	text-align: center;
+	width: 30%;
+	height: 40%;
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+}
+
+.rate-page-star {
+	height: 50px;
+}
