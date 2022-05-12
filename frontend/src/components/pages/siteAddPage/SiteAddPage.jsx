@@ -7,7 +7,7 @@ import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 import { DropDown } from '../../dropDown';
 import { PageInput } from '../../pageInput';
 
-import './siteAdd.css';
+import './siteAddPage.css';
 
 export function SiteAddPage() {
 	const navigate = useNavigate();
@@ -61,7 +61,7 @@ export function SiteAddPage() {
 	};
 	const onSubmitClicked = () => {
 		let flag = true;
-		if ([season, district, difficulty, distance, duration, type].includes(-1)) {
+		if ([season, difficulty, distance, duration, type].includes(-1)) {
 			alert('Please finish configuring the site');
 			flag = false;
 		}
