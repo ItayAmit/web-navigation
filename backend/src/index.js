@@ -11,6 +11,7 @@ const {
 	Distance,
 	Duration,
 	Type,
+	Rate,
 } = require('./database');
 
 const bcrypt = require('bcrypt');
@@ -48,7 +49,7 @@ app.post('/register', (req, res) => {
 			await user.save();
 			res.status(httpStatus.OK).json({
 				msg: { user: 'User has been saved' },
-				redirect: `${user.id}`,
+				redirect: user.id,
 			});
 		}
 	});
@@ -175,7 +176,8 @@ app.get('/types', async (req, res) => {
 });
 
 app.get('/sites', async (req, res) => {
-	const { season, district, difficulty, distance, duration, type } = req.query;
+	const { siteid, season, district, difficulty, distance, duration, type } =
+		req.query;
 	const intSeason = parseInt(season);
 	const intDistrict = parseInt(district);
 	const intDifficulty = parseInt(difficulty);
@@ -183,23 +185,57 @@ app.get('/sites', async (req, res) => {
 	const intDuration = parseInt(duration);
 	const intType = parseInt(type);
 
-	console.log(intDistance);
+	if (siteid) {
+		const site = await Site.findOne({ _id: siteid });
+		res.status(httpStatus.OK).json({
+			site,
+		});
+	} else {
+		let sites = await Site.find({});
 
-	let sites = await Site.find({});
+		if (intSeason !== -1)
+			sites = sites.filter(site => site.season === intSeason);
+		if (intDistrict !== -1)
+			sites = sites.filter(site => site.district === intDistrict);
+		if (intDifficulty !== -1)
+			sites = sites.filter(site => site.difficulty === intDifficulty);
+		if (intDistance !== -1)
+			sites = sites.filter(site => site.distance === intDistance);
+		if (intDuration !== -1)
+			sites = sites.filter(site => site.duration === intDuration);
+		if (intType !== -1) sites = sites.filter(site => site.type === intType);
 
-	if (intSeason !== -1) sites = sites.filter(site => site.season === intSeason);
-	if (intDistrict !== -1)
-		sites = sites.filter(site => site.district === intDistrict);
-	if (intDifficulty !== -1)
-		sites = sites.filter(site => site.difficulty === intDifficulty);
-	if (intDistance !== -1)
-		sites = sites.filter(site => site.distance === intDistance);
-	if (intDuration !== -1)
-		sites = sites.filter(site => site.duration === intDuration);
-	if (intType !== -1) sites = sites.filter(site => site.type === intType);
+		res.status(httpStatus.OK).json({
+			sites,
+		});
+	}
+});
 
+app.post('/rate', async (req, res) => {
+	const { userid, siteid, rating, comment } = req.body;
+	const rate = new Rate({
+		userid,
+		siteid,
+		rating,
+		comment,
+	});
+	await rate.save();
 	res.status(httpStatus.OK).json({
-		sites,
+		msg: 'Rate has been submitted successfully',
+	});
+});
+
+app.put('/rate', async (req, res) => {
+	const { userid, siteid, rating, comment } = req.body;
+	const newRate = Rate({
+		userid,
+		siteid,
+		rating,
+		comment,
+	});
+	Rate.findOneAndUpdate({ userid, siteid });
+	res.status(httpStatus.OK).json({
+		msg: 'Rate has been updated successfully',
 	});
 });
 
