@@ -10,12 +10,14 @@
 .site-card-title {
 	margin-top: 5px;
 	margin-left: 5px;
+	user-select: none;
 }
 
 .site-card-characteristic {
 	font-size: 15px;
 	margin-right: 10px;
 	border-bottom: 1px solid;
+	user-select: none;
 }
 
 .site-card-row {
