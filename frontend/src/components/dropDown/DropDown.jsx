@@ -21,7 +21,7 @@ export function DropDown({ title = 'DropDown', items, onChange }) {
 				<span className='drop-down-header-title'>{dynamicTitle}</span>
 				<img
 					className='drop-down-header-image'
-					src={arrow}
+					src={betterarrow}
 					style={
 						hidden
 							? { transform: 'rotate(0deg)' }
