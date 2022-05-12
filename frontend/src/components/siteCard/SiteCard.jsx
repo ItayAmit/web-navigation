@@ -24,9 +24,9 @@ export function SiteCard({
 		>
 			<span className='site-card-title'>{site.name}</span>
 			<div className='site-card-row'>
-				{/* <span className='site-card-characteristic'>
+				<span className='site-card-characteristic'>
 					District: {districts[site.district].name}
-				</span> */}
+				</span>
 				<span className='site-card-characteristic'>
 					Season: {seasons[site.season].name}
 				</span>
