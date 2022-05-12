@@ -9,8 +9,46 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
 }
 
-.rate-page-star {
+.rate-page-rating {
+	margin-top: 10px;
+	margin-bottom: 10px;
 	height: 50px;
+}
+
+.rate-page-comment {
+	width: 90%;
+	color: #fff;
+	background-color: #444;
+	border: 5px;
+	border-color: #888;
+	border-style: solid;
+	border-radius: 5px;
+	resize: none;
+	font-size: 20px;
+	font-family: Arial;
+	max-lines: 10;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.rate-page-submition {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.rate-page-button {
+	width: 100px;
+	height: 30px;
+	margin-top: 10%;
+	margin-right: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+	background: #ddd;
+	border-color: #fff;
+	font-size: 20px;
 }
