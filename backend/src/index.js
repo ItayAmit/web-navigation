@@ -227,15 +227,18 @@ app.post('/rate', async (req, res) => {
 
 app.put('/rate', async (req, res) => {
 	const { userid, siteid, rating, comment } = req.body;
-	const newRate = Rate({
-		userid,
-		siteid,
-		rating,
-		comment,
-	});
-	Rate.findOneAndUpdate({ userid, siteid });
+	console.log(rating, comment);
+	await Rate.findOneAndUpdate({ userid, siteid }, { rating, comment });
 	res.status(httpStatus.OK).json({
 		msg: 'Rate has been updated successfully',
+	});
+});
+
+app.get('/rate', async (req, res) => {
+	const { userid, siteid } = req.query;
+	const rate = await Rate.findOne({ userid, siteid });
+	res.status(httpStatus.OK).json({
+		rate,
 	});
 });
 
