@@ -7,6 +7,7 @@ import { RegisterPage } from './components/pages/registerPage';
 import { UserPage } from './components/pages/userPage';
 import { SiteAddPage } from './components/pages/siteAddPage';
 import { BrowsePage } from './components/pages/browsePage';
+import { RatePage } from './components/pages/ratePage';
 
 function App() {
 	return (
@@ -19,6 +20,7 @@ function App() {
 				<Route exact path='/user' element={<UserPage />} />
 				<Route exact path='/addsite' element={<SiteAddPage />} />
 				<Route exact path='/browse' element={<BrowsePage />} />
+				<Route exact path='/rate' element={<RatePage />} />
 			</Routes>
 		</Router>
 	);
