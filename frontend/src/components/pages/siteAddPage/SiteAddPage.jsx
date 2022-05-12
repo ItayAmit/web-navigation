@@ -6,6 +6,7 @@ import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 
 import { DropDown } from '../../dropDown';
 import { PageInput } from '../../pageInput';
+import { MyGoogleMap } from '../../myGoogleMap';
 
 import './siteAddPage.css';
 
@@ -30,6 +31,8 @@ export function SiteAddPage() {
 	const [durations, setDurations] = useState();
 	const [types, setTypes] = useState();
 
+	const [marker, setMarker] = useState();
+
 	useEffect(() => {
 		const token = tokens.getToken('userDetails');
 		setUserId(token.userId);
@@ -53,6 +56,14 @@ export function SiteAddPage() {
 		});
 	}, []);
 
+	useEffect(() => {
+		if (marker) determineDistrict();
+	}, [marker]);
+
+	useEffect(() => {
+		console.log(district);
+	}, [district]);
+
 	const onDescriptionChanged = event => {
 		setDescription(event.target.value);
 	};
@@ -61,7 +72,7 @@ export function SiteAddPage() {
 	};
 	const onSubmitClicked = () => {
 		let flag = true;
-		if ([season, difficulty, distance, duration, type].includes(-1)) {
+		if ([district, season, difficulty, distance, duration, type].includes(-1)) {
 			alert('Please finish configuring the site');
 			flag = false;
 		}
@@ -95,15 +106,15 @@ export function SiteAddPage() {
 	};
 
 	const isInDistrict = (point, district) => {
-		const [lat, lon] = point;
+		const { lat, lng } = point;
 		const { north, east, south, west } = district;
 		if (lat < south || lat > north) return false;
-		if (lon < east || lon > west) return false;
+		if (lng > east || lng < west) return false;
 		return true;
 	};
-	const determineDistrict = point => {
+	const determineDistrict = () => {
 		districts.forEach(district => {
-			if (isInDistrict(point, district)) setDistrict(district.key);
+			if (isInDistrict(marker, district)) setDistrict(district.key);
 		});
 	};
 
@@ -149,6 +160,7 @@ export function SiteAddPage() {
 				</div>
 				<div className='site-add-map'>
 					<span className='site-add-span'>Choose a location on the map</span>
+					<MyGoogleMap onClick={setMarker} markers={marker} />
 				</div>
 			</div>
 			<div className='site-add-submition'>
