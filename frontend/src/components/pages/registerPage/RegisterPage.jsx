@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userApiCommunicator } from '../../../api/userApiCommunicator';
+import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 
 import { PageInput } from '../../pageInput';
 
@@ -21,6 +22,8 @@ export function RegisterPage() {
 	const [lastnameError, setLastnameError] = useState('');
 	const [email, setEmail] = useState('');
 	const [emailError, setEmailError] = useState('');
+
+	const hour = 60 * 60 * 1000;
 
 	const validateEmail = email => {
 		let es = /\S+@\S+\.\S+/;
@@ -78,8 +81,15 @@ export function RegisterPage() {
 			userApiCommunicator
 				.register(username, password, firstname, lastname, email)
 				.then(response => {
-					// console.log(response);
-					if (response['redirect']) navigate('/user');
+					if (response['redirect']) {
+						tokens.removeToken('userid');
+						let token = {
+							userId: response.redirect,
+							expireDate: Date.now() + hour,
+						};
+						tokens.setToken('userDetails', token);
+						navigate('/user');
+					}
 					if (response.msg['user']) setUsernameError(response.msg.user);
 					if (response.msg['email']) setEmailError(response.msg.email);
 				});
