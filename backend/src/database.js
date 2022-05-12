@@ -23,11 +23,18 @@ const siteSchema = new Schema({
 	description: String,
 });
 
+const rateSchema = new Schema({
+	userid: String,
+	siteid: String,
+	rating: Number,
+	comment: String,
+});
+
 const tripSchema = new Schema({
 	userid: String,
 	date: String,
-	origin: { type: [Number], required: true },
-	destination: { type: [Number], required: true },
+	origin: { type: [Number] },
+	destination: { type: [Number] },
 });
 
 const districtSchema = new Schema({
@@ -72,6 +79,7 @@ const Difficulty = mongoose.model('Difficulty', difficultySchema);
 const Distance = mongoose.model('Distance', distanceSchema);
 const Duration = mongoose.model('Duration', durationSchema);
 const Type = mongoose.model('Type', typeSchema);
+const Rate = mongoose.model('Rate', rateSchema);
 
 module.exports = {
 	User,
@@ -82,4 +90,5 @@ module.exports = {
 	Distance,
 	Duration,
 	Type,
+	Rate,
 };
