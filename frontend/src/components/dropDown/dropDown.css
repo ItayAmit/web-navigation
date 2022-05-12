@@ -1,7 +1,7 @@
 .drop-down-container {
 	margin-top: 10px;
 	background: #444;
-	width: 75%;
+	width: 100%;
 }
 
 .drop-down-header {
@@ -19,8 +19,7 @@
 	width: 25px;
 	padding-left: 10px;
 	padding-right: 10px;
-	position: relative;
-	float: right;
+	user-select: none;
 }
 .drop-down-list {
 	background: #444;
