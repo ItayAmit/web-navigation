@@ -3,7 +3,6 @@ import './siteCard.css';
 export function SiteCard({
 	site,
 	onClick,
-	number,
 	highlighted,
 	districts,
 	seasons,
@@ -13,14 +12,14 @@ export function SiteCard({
 	types,
 }) {
 	const onCardClicked = () => {
-		onClick(site._id, number);
+		onClick(site);
 	};
 	return (
 		<div
 			className='site-card-container'
 			onClick={onCardClicked}
 			style={
-				highlighted ? { borderColor: '#add8e6' } : { borderColor: '666666' }
+				highlighted ? { borderColor: '#add8e6' } : { borderColor: '#666666' }
 			}
 		>
 			<span className='site-card-title'>{site.name}</span>
