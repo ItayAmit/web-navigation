@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { keyApiCommunicator } from '../../../api/keyApiCommunicator';
 import { siteApiCommunicator } from '../../../api/siteApiCommunicator';
+import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 import { DropDown } from '../../dropDown';
 import { SiteCard } from '../../siteCard';
 import './browsePage.css';
 
 export function BrowsePage() {
+	const navigate = useNavigate();
 	const [district, setDistrict] = useState(-1);
 	const [season, setSeason] = useState(-1);
 	const [difficulty, setDifficulty] = useState(-1);
@@ -21,8 +24,7 @@ export function BrowsePage() {
 	const [durations, setDurations] = useState();
 	const [types, setTypes] = useState();
 
-	const [selectedSite, setSelectedSite] = useState();
-	const [highlight, setHighlight] = useState(-1);
+	const [selectedSite, setSelectedSite] = useState(-1);
 
 	useEffect(() => {
 		keyApiCommunicator.getValuesFromKey('districts').then(response => {
@@ -46,16 +48,37 @@ export function BrowsePage() {
 	}, []);
 
 	useEffect(() => {
+		console.log(season, district, difficulty, distance, duration, type);
 		siteApiCommunicator
-			.find(season, district, difficulty, distance, duration, type)
+			.find(undefined, season, district, difficulty, distance, duration, type)
 			.then(response => {
 				setSites(response.sites);
 			});
+		setSelectedSite(-1);
 	}, [season, district, difficulty, distance, duration, type]);
 
-	const setSelectedCard = (siteid, number) => {
-		setSelectedSite(siteid);
-		setHighlight(number);
+	useEffect(() => {
+		setSelectedCard(-1);
+	}, [sites]);
+
+	const setSelectedCard = site => {
+		if (selectedSite === site._id) setSelectedSite(-1);
+		else setSelectedSite(site._id);
+	};
+
+	const onCancelClicked = () => {
+		navigate('/user');
+	};
+
+	const onNavigateClicked = () => {};
+
+	const onRateClicked = () => {
+		if (tokens.getToken('siteid')) tokens.removeToken('siteid');
+		const siteDetails = {
+			siteid: selectedSite,
+		};
+		tokens.setToken('siteid', siteDetails);
+		navigate('/rate');
 	};
 
 	return (
@@ -90,10 +113,9 @@ export function BrowsePage() {
 					{sites?.map((site, index) => (
 						<SiteCard
 							key={index}
-							number={index}
 							site={site}
 							onClick={setSelectedCard}
-							highlighted={highlight === index}
+							highlighted={selectedSite === site._id}
 							districts={districts}
 							seasons={seasons}
 							difficulties={difficulties}
@@ -104,7 +126,28 @@ export function BrowsePage() {
 					))}
 				</div>
 			</div>
-			<div className='browse-site-submition'></div>
+			<div className='browse-site-submition'>
+				<button
+					className='browse-site-submition-button'
+					onClick={onCancelClicked}
+				>
+					Cancel
+				</button>
+				<button
+					className='browse-site-submition-button'
+					onClick={onNavigateClicked}
+					hidden={selectedSite === -1}
+				>
+					Navigate
+				</button>
+				<button
+					className='browse-site-submition-button'
+					onClick={onRateClicked}
+					hidden={selectedSite === -1}
+				>
+					Rate
+				</button>
+			</div>
 		</div>
 	);
 }
