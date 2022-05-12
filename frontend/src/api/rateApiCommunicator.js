@@ -1,8 +1,9 @@
 import { apiCommunicator } from './apiCommunicator';
 
-export const rateApiCommunicaotr = {
+export const rateApiCommunicator = {
 	submit,
 	update,
+	retrieve,
 };
 
 function submit(userid, siteid, rating, comment) {
@@ -25,6 +26,16 @@ function update(userid, siteid, rating, comment) {
 		comment,
 	};
 	return apiCommunicator.put('rate', rate).then(response => {
+		return response;
+	});
+}
+
+function retrieve(userid, siteid) {
+	const params = {
+		userid,
+		siteid,
+	};
+	return apiCommunicator.getWithParams('rate', params).then(response => {
 		return response;
 	});
 }
