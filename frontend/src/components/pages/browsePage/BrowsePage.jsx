@@ -48,13 +48,12 @@ export function BrowsePage() {
 	}, []);
 
 	useEffect(() => {
-		console.log(season, district, difficulty, distance, duration, type);
 		siteApiCommunicator
 			.find(undefined, season, district, difficulty, distance, duration, type)
 			.then(response => {
 				setSites(response.sites);
 			});
-		setSelectedSite(-1);
+		setSelectedSite();
 	}, [season, district, difficulty, distance, duration, type]);
 
 	useEffect(() => {
