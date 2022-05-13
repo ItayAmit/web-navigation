@@ -16,8 +16,17 @@ export function RatePage() {
 	const [userid, setUserid] = useState();
 	const [rate, setRate] = useState();
 	const [rating, setRating] = useState(1);
+	const [hoverRating, setHoverRating] = useState(1);
+	const [hover, setHover] = useState(false);
 	const [comment, setComment] = useState('');
 	const [isNew, setIsNew] = useState(true);
+	const ratingDescriptions = [
+		'Terrible',
+		'Bad',
+		'Okay',
+		'Enjoyed it',
+		'Terrific!',
+	];
 	useEffect(() => {
 		setSiteid(tokens.getToken('siteid').siteid);
 		siteApiCommunicator.find(siteid).then(response => {
@@ -55,13 +64,33 @@ export function RatePage() {
 					<img
 						className='rate-page-rating'
 						key={i + 1}
-						src={rating >= i + 1 ? FilledStar : EmptyStar}
+						src={
+							hover
+								? hoverRating >= i + 1
+									? FilledStar
+									: EmptyStar
+								: rating >= i + 1
+								? FilledStar
+								: EmptyStar
+						}
 						onClick={() => {
 							setRating(i + 1);
+						}}
+						onMouseEnter={() => {
+							setHoverRating(i + 1);
+							setHover(true);
+						}}
+						onMouseLeave={() => {
+							setHover(false);
 						}}
 					/>
 				))}
 			</div>
+			<span className='rate-page-rating-description'>
+				{hover
+					? ratingDescriptions[hoverRating - 1]
+					: ratingDescriptions[rating - 1]}
+			</span>
 			<textarea
 				className='rate-page-comment'
 				rows='7'
