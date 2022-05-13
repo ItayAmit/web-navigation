@@ -236,10 +236,17 @@ app.put('/rate', async (req, res) => {
 
 app.get('/rate', async (req, res) => {
 	const { userid, siteid } = req.query;
-	const rate = await Rate.findOne({ userid, siteid });
-	res.status(httpStatus.OK).json({
-		rate,
-	});
+	if (!userid) {
+		const rates = await Rate.find({ siteid });
+		res.status(httpStatus.OK).json({
+			rates,
+		});
+	} else {
+		const rate = await Rate.findOne({ userid, siteid });
+		res.status(httpStatus.OK).json({
+			rate,
+		});
+	}
 });
 
 app.listen(port, () => {
