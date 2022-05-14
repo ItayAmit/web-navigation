@@ -4,6 +4,8 @@ export function SiteCard({
 	site,
 	onClick,
 	highlighted,
+	rating = 0,
+	numberOfRatings = 0,
 	districts,
 	seasons,
 	difficulties,
@@ -25,24 +27,32 @@ export function SiteCard({
 			<span className='site-card-title'>{site.name}</span>
 			<div className='site-card-row'>
 				<span className='site-card-characteristic'>
-					District: {districts[site.district].name}
+					Average rating: {rating}
 				</span>
 				<span className='site-card-characteristic'>
-					Season: {seasons[site.season].name}
-				</span>
-				<span className='site-card-characteristic'>
-					Difficulty: {difficulties[site.difficulty].name}
+					Number of ratings: {numberOfRatings}
 				</span>
 			</div>
 			<div className='site-card-row'>
 				<span className='site-card-characteristic'>
-					Distance: {distances[site.distance].name}
+					District: {districts ? districts[site.district].name : 0}
 				</span>
 				<span className='site-card-characteristic'>
-					Duration: {durations[site.duration].name}
+					Season: {seasons ? seasons[site.season].name : 0}
 				</span>
 				<span className='site-card-characteristic'>
-					Type: {types[site.type].name}
+					Difficulty: {difficulties ? difficulties[site.difficulty].name : 0}
+				</span>
+			</div>
+			<div className='site-card-row'>
+				<span className='site-card-characteristic'>
+					Distance: {distances ? distances[site.distance].name : 0}
+				</span>
+				<span className='site-card-characteristic'>
+					Duration: {durations ? durations[site.duration].name : 0}
+				</span>
+				<span className='site-card-characteristic'>
+					Type: {types ? types[site.type].name : 0}
 				</span>
 			</div>
 			<div className='site-card-row'>
