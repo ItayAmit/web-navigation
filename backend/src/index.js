@@ -176,14 +176,7 @@ app.get('/types', async (req, res) => {
 });
 
 app.get('/sites', async (req, res) => {
-	const { siteid, season, district, difficulty, distance, duration, type } =
-		req.query;
-	const intSeason = parseInt(season);
-	const intDistrict = parseInt(district);
-	const intDifficulty = parseInt(difficulty);
-	const intDistance = parseInt(distance);
-	const intDuration = parseInt(duration);
-	const intType = parseInt(type);
+	const { siteid } = req.query;
 
 	if (siteid) {
 		const site = await Site.findOne({ _id: siteid });
@@ -191,20 +184,7 @@ app.get('/sites', async (req, res) => {
 			site,
 		});
 	} else {
-		let sites = await Site.find({});
-
-		if (intSeason !== -1)
-			sites = sites.filter(site => site.season === intSeason);
-		if (intDistrict !== -1)
-			sites = sites.filter(site => site.district === intDistrict);
-		if (intDifficulty !== -1)
-			sites = sites.filter(site => site.difficulty === intDifficulty);
-		if (intDistance !== -1)
-			sites = sites.filter(site => site.distance === intDistance);
-		if (intDuration !== -1)
-			sites = sites.filter(site => site.duration === intDuration);
-		if (intType !== -1) sites = sites.filter(site => site.type === intType);
-
+		const sites = await Site.find({});
 		res.status(httpStatus.OK).json({
 			sites,
 		});
@@ -236,8 +216,8 @@ app.put('/rate', async (req, res) => {
 
 app.get('/rate', async (req, res) => {
 	const { userid, siteid } = req.query;
-	if (!userid) {
-		const rates = await Rate.find({ siteid });
+	if (!userid && !siteid) {
+		const rates = await Rate.find();
 		res.status(httpStatus.OK).json({
 			rates,
 		});
