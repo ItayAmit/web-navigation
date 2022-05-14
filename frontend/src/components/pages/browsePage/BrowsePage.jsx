@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { keyApiCommunicator } from '../../../api/keyApiCommunicator';
 import { siteApiCommunicator } from '../../../api/siteApiCommunicator';
+import { rateApiCommunicator } from '../../../api/rateApiCommunicator';
 import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 import { DropDown } from '../../dropDown';
 import { SiteCard } from '../../siteCard';
@@ -15,7 +16,6 @@ export function BrowsePage() {
 	const [distance, setDistance] = useState(-1);
 	const [duration, setDuration] = useState(-1);
 	const [type, setType] = useState(-1);
-	const [sites, setSites] = useState();
 
 	const [districts, setDistrics] = useState();
 	const [seasons, setSeasons] = useState();
@@ -23,8 +23,11 @@ export function BrowsePage() {
 	const [distances, setDistances] = useState();
 	const [durations, setDurations] = useState();
 	const [types, setTypes] = useState();
+	const [hiddenSites, setHiddenSites] = useState();
+	const [shownSites, setShownSites] = useState();
 
 	const [selectedSite, setSelectedSite] = useState(-1);
+	const [rates, setRates] = useState();
 
 	useEffect(() => {
 		keyApiCommunicator.getValuesFromKey('districts').then(response => {
@@ -45,20 +48,62 @@ export function BrowsePage() {
 		keyApiCommunicator.getValuesFromKey('types').then(response => {
 			setTypes(response.types);
 		});
+		siteApiCommunicator.find().then(response => {
+			setHiddenSites(response.sites);
+		});
+		rateApiCommunicator.retrieve().then(response => {
+			setRates(response.rates);
+		});
 	}, []);
 
 	useEffect(() => {
-		siteApiCommunicator
-			.find(undefined, season, district, difficulty, distance, duration, type)
-			.then(response => {
-				setSites(response.sites);
-			});
-		setSelectedSite();
-	}, [season, district, difficulty, distance, duration, type]);
+		if (hiddenSites && rates) {
+			addRatings();
+			sortSites();
+			filterSites();
+		}
+	}, [hiddenSites, rates]);
 
 	useEffect(() => {
+		filterSites();
+		setSelectedSite();
 		setSelectedCard(-1);
-	}, [sites]);
+	}, [season, district, difficulty, distance, duration, type]);
+
+	const filterSites = () => {
+		setShownSites(
+			hiddenSites?.filter(site => {
+				return (
+					(season !== -1 ? site.season === season : true) &&
+					(district !== -1 ? site.district === district : true) &&
+					(difficulty !== -1 ? site.difficulty === difficulty : true) &&
+					(distance !== -1 ? site.distance === distance : true) &&
+					(duration !== -1 ? site.duration === duration : true) &&
+					(type !== -1 ? site.type === type : true)
+				);
+			})
+		);
+	};
+
+	const addRatings = () => {
+		hiddenSites?.forEach(site => {
+			const belongingRates = rates.filter(rate => rate.siteid === site._id);
+			const ratesCount = belongingRates.length;
+			const ratesSum = belongingRates.reduce((accumulator, rate) => {
+				return accumulator + rate.rating;
+			}, 0);
+			site.rating = ratesCount !== 0 ? ratesSum / ratesCount : 0;
+			site.numberOfRatings = ratesCount;
+		});
+	};
+
+	const sortSites = () => {
+		hiddenSites.sort((a, b) => compareSites(a, b));
+	};
+
+	const compareSites = (a, b) => {
+		return b.rating - a.rating;
+	};
 
 	const setSelectedCard = site => {
 		if (selectedSite === site._id) setSelectedSite(-1);
@@ -109,12 +154,14 @@ export function BrowsePage() {
 					<DropDown title={'Type'} items={types} onChange={setType} />
 				</div>
 				<div className='browse-site-list'>
-					{sites?.map((site, index) => (
+					{shownSites?.map((site, index) => (
 						<SiteCard
 							key={index}
 							site={site}
 							onClick={setSelectedCard}
 							highlighted={selectedSite === site._id}
+							rating={site.rating}
+							numberOfRatings={site.numberOfRatings}
 							districts={districts}
 							seasons={seasons}
 							difficulties={difficulties}
