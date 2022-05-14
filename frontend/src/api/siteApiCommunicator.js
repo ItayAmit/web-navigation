@@ -32,15 +32,9 @@ function add(
 	});
 }
 
-function find(siteid, season, district, difficulty, distance, duration, type) {
+function find(siteid) {
 	const params = {
 		siteid,
-		season,
-		district,
-		difficulty,
-		distance,
-		duration,
-		type,
 	};
 	return apiCommunicator.getWithParams('sites', params);
 }
