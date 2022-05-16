@@ -14,7 +14,8 @@ function add(
 	distance,
 	duration,
 	type,
-	description
+	description,
+	location
 ) {
 	const site = {
 		userid: id,
@@ -26,6 +27,7 @@ function add(
 		duration,
 		type,
 		description,
+		location,
 	};
 	return apiCommunicator.post('addsite', site).then(response => {
 		return response;
