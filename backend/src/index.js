@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const {
 	User,
 	Site,
+	Search,
 	District,
 	Season,
 	Difficulty,
@@ -105,6 +106,7 @@ app.post('/addsite', async (req, res) => {
 		duration,
 		type,
 		description,
+		location,
 	} = req.body;
 	const site = new Site({
 		userid,
@@ -116,6 +118,7 @@ app.post('/addsite', async (req, res) => {
 		duration,
 		type,
 		description,
+		location,
 	});
 	const siteNameExists = await Site.exists({ name });
 	if (siteNameExists) {
@@ -227,6 +230,40 @@ app.get('/rate', async (req, res) => {
 			rate,
 		});
 	}
+});
+
+app.post('/search', async (req, res) => {
+	const {
+		userid,
+		season,
+		district,
+		difficulty,
+		distance,
+		duration,
+		type,
+		date,
+	} = req.body;
+	const search = new Search({
+		userid,
+		season,
+		district,
+		difficulty,
+		distance,
+		duration,
+		type,
+		date,
+	});
+	await search.save();
+	res.status(httpStatus.OK).json({
+		msg: 'Search has been saved',
+	});
+});
+
+app.get('/search', async (req, res) => {
+	const searches = await Search.find();
+	res.status(httpStatus.OK).json({
+		searches,
+	});
 });
 
 app.listen(port, () => {
