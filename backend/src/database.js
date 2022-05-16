@@ -21,6 +21,7 @@ const siteSchema = new Schema({
 	duration: Number,
 	type: Number,
 	description: String,
+	location: { lat: Number, lng: Number },
 });
 
 const rateSchema = new Schema({
@@ -35,6 +36,17 @@ const tripSchema = new Schema({
 	date: String,
 	origin: { type: [Number] },
 	destination: { type: [Number] },
+});
+
+const searchSchema = new Schema({
+	userid: String,
+	season: Number,
+	district: Number,
+	difficulty: Number,
+	distance: Number,
+	duration: Number,
+	type: Number,
+	date: Number,
 });
 
 const districtSchema = new Schema({
@@ -73,6 +85,7 @@ const typeSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);
 const Site = mongoose.model('Site', siteSchema);
+const Search = mongoose.model('Search', searchSchema);
 const District = mongoose.model('District', districtSchema);
 const Season = mongoose.model('Season', seasonSchema);
 const Difficulty = mongoose.model('Difficulty', difficultySchema);
@@ -84,6 +97,7 @@ const Rate = mongoose.model('Rate', rateSchema);
 module.exports = {
 	User,
 	Site,
+	Search,
 	District,
 	Season,
 	Difficulty,
