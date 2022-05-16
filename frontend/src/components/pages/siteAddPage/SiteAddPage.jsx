@@ -6,7 +6,7 @@ import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 
 import { DropDown } from '../../dropDown';
 import { PageInput } from '../../pageInput';
-import { MyGoogleMap } from '../../myGoogleMap';
+import { Mapbox } from '../../Mapbox';
 
 import './siteAddPage.css';
 
@@ -60,10 +60,6 @@ export function SiteAddPage() {
 		if (marker) determineDistrict();
 	}, [marker]);
 
-	useEffect(() => {
-		console.log(district);
-	}, [district]);
-
 	const onDescriptionChanged = event => {
 		setDescription(event.target.value);
 	};
@@ -96,7 +92,8 @@ export function SiteAddPage() {
 					distance,
 					duration,
 					type,
-					description
+					description,
+					marker
 				)
 				.then(response => {
 					if (response.msg['name']) setSiteNameError(response.msg.name);
@@ -160,7 +157,7 @@ export function SiteAddPage() {
 				</div>
 				<div className='site-add-map'>
 					<span className='site-add-span'>Choose a location on the map</span>
-					<MyGoogleMap onClick={setMarker} markers={marker} />
+					<Mapbox onClick={setMarker} marker={marker} />
 				</div>
 			</div>
 			<div className='site-add-submition'>
