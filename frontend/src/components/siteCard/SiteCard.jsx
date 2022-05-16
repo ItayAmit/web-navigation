@@ -26,6 +26,13 @@ export function SiteCard({
 		>
 			<span className='site-card-title'>{site.name}</span>
 			<div className='site-card-row'>
+				{site.location && (
+					<span className='site-card-characteristic'>
+						Lat: {site.location.lat} Lng: {site.location.lng}
+					</span>
+				)}
+			</div>
+			<div className='site-card-row'>
 				<span className='site-card-characteristic'>
 					Average rating: {rating}
 				</span>
