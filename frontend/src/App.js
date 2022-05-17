@@ -8,6 +8,7 @@ import { UserPage } from './components/pages/userPage';
 import { SiteAddPage } from './components/pages/siteAddPage';
 import { BrowsePage } from './components/pages/browsePage';
 import { RatePage } from './components/pages/ratePage';
+import { AdminPage } from './components/pages/adminPage';
 
 function App() {
 	return (
@@ -21,6 +22,7 @@ function App() {
 				<Route exact path='/addsite' element={<SiteAddPage />} />
 				<Route exact path='/browse' element={<BrowsePage />} />
 				<Route exact path='/rate' element={<RatePage />} />
+				<Route exact path='/admin' element={<AdminPage />} />
 			</Routes>
 		</Router>
 	);
