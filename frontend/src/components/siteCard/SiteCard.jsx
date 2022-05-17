@@ -32,14 +32,16 @@ export function SiteCard({
 					</span>
 				)}
 			</div>
-			<div className='site-card-row'>
-				<span className='site-card-characteristic'>
-					Average rating: {rating}
-				</span>
-				<span className='site-card-characteristic'>
-					Number of ratings: {numberOfRatings}
-				</span>
-			</div>
+			{rating !== 0 && numberOfRatings !== 0 && (
+				<div className='site-card-row'>
+					<span className='site-card-characteristic'>
+						Average rating: {rating}
+					</span>
+					<span className='site-card-characteristic'>
+						Number of ratings: {numberOfRatings}
+					</span>
+				</div>
+			)}
 			<div className='site-card-row'>
 				<span className='site-card-characteristic'>
 					District: {districts ? districts[site.district].name : 0}

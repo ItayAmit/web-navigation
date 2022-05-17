@@ -24,6 +24,7 @@ export function BrowsePage() {
 	const [distances, setDistances] = useState();
 	const [durations, setDurations] = useState();
 	const [types, setTypes] = useState();
+
 	const [hiddenSites, setHiddenSites] = useState();
 	const [shownSites, setShownSites] = useState();
 

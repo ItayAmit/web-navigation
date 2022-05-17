@@ -29,14 +29,14 @@
 	background: #444;
 }
 
-.user-page-body-navigation {
+.user-page-navigation {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 }
 
-.user-page-body-navigation-button {
+.user-page-navigation-button {
 	display: flex;
 	flex-direction: column;
 	width: 100px;
@@ -48,14 +48,30 @@
 	font-size: 20px;
 }
 
-.user-page-images {
-	width: 100%;
+.user-page-body {
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.user-page-images {
+	height: 100%;
+	width: 50%;
 }
 
 .user-page-image {
-	height: 300px;
+	height: 200px;
+	width: fit-content;
 	margin: 25px;
+}
+
+.user-page-recommendations {
+	height: 75%;
+	width: 50%;
+	text-align: center;
+}
+
+.user-page-recommendations-list {
+	height: 100%;
+	overflow-y: auto;
 }

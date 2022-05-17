@@ -1,0 +1,97 @@
+.admin-container {
+	background: #444;
+	display: flex;
+	flex-direction: column;
+	color: #fff;
+	width: 95%;
+	height: 95%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+}
+
+.admin-header {
+	height: 20%;
+	text-align: center;
+	margin-top: 20px;
+	border-bottom: solid;
+	border-color: #666;
+}
+
+.admin-body {
+	height: 60%;
+	display: flex;
+	flex-direction: row;
+}
+
+.admin-users-management {
+	width: 50%;
+	border-right: solid;
+	border-color: #666;
+}
+
+.admin-users-list {
+}
+
+.admin-users-submition {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	height: 20%;
+	width: 100%;
+}
+
+.admin-users-button {
+	width: 100px;
+	height: 30px;
+	margin-top: 20px;
+	margin-right: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+	background: #ddd;
+	border-color: #fff;
+	font-size: 20px;
+}
+
+.admin-sites-management {
+	width: 50%;
+}
+
+.admin-sites {
+	height: 85%;
+	overflow-y: auto;
+}
+
+.admin-sites-submition {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	height: 20%;
+	width: 100%;
+	border-top: solid;
+	border-color: #666;
+}
+
+.admin-navigation {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	height: 20%;
+	width: 100%;
+	border-top: solid;
+	border-color: #666;
+}
+
+.admin-button {
+	width: 100px;
+	height: 30px;
+	margin-top: 20px;
+	margin-right: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+	background: #ddd;
+	border-color: #fff;
+	font-size: 20px;
+}
