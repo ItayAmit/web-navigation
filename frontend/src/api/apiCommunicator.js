@@ -5,6 +5,7 @@ export const apiCommunicator = {
 	getWithParams,
 	post,
 	put,
+	del,
 };
 
 const API_URL = 'http://localhost:5000';
@@ -41,6 +42,16 @@ async function post(path, body) {
 
 async function put(path, body) {
 	return await Axios.put(`${API_URL}/${path}`, body)
+		.then(response => {
+			return response.data;
+		})
+		.catch(error => {
+			return { msg: error.response.data.msg };
+		});
+}
+
+async function del(path, body) {
+	return await Axios.delete(`${API_URL}/${path}/${body}`)
 		.then(response => {
 			return response.data;
 		})
