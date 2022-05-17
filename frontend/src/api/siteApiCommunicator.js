@@ -3,6 +3,7 @@ import { apiCommunicator } from './apiCommunicator';
 export const siteApiCommunicator = {
 	add,
 	find,
+	remove,
 };
 
 function add(
@@ -39,4 +40,8 @@ function find(siteid) {
 		siteid,
 	};
 	return apiCommunicator.getWithParams('sites', params);
+}
+
+function remove(siteid) {
+	return apiCommunicator.del('sites', siteid);
 }
