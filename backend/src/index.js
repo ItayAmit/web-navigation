@@ -35,6 +35,7 @@ app.post('/register', (req, res) => {
 			firstname,
 			lastname,
 			email,
+			admin: false,
 		});
 		const usernameExists = await User.exists({ username });
 		const emailExists = await User.exists({ email });
@@ -81,6 +82,13 @@ app.post('/login', async (req, res) => {
 	}
 });
 
+app.get('/user', async (req, res) => {
+	const users = await User.find({});
+	res.status(httpStatus.OK).json({
+		users,
+	});
+});
+
 app.get('/user/:id', async (req, res) => {
 	const id = req.params.id;
 	if (await User.exists({ _id: id })) {
@@ -92,6 +100,15 @@ app.get('/user/:id', async (req, res) => {
 		res.status(httpStatus.BAD_REQUEST).json({
 			msg: { user: `User with the id ${id} does not exist` },
 		});
+	}
+});
+
+app.put('/user', async (req, res) => {
+	const users = req.body;
+	if (!users) return;
+	for (let i = 0; i < users.length; i++) {
+		let user = users[i];
+		await User.findOneAndUpdate({ _id: user._id }, { admin: user.admin });
 	}
 });
 
@@ -194,6 +211,12 @@ app.get('/sites', async (req, res) => {
 	}
 });
 
+app.delete('/sites/:siteid', async (req, res) => {
+	const { siteid } = req.params;
+	if (!siteid) return;
+	await Site.deleteOne({ _id: siteid });
+});
+
 app.post('/rate', async (req, res) => {
 	const { userid, siteid, rating, comment } = req.body;
 	const rate = new Rate({
@@ -210,7 +233,6 @@ app.post('/rate', async (req, res) => {
 
 app.put('/rate', async (req, res) => {
 	const { userid, siteid, rating, comment } = req.body;
-	console.log(rating, comment);
 	await Rate.findOneAndUpdate({ userid, siteid }, { rating, comment });
 	res.status(httpStatus.OK).json({
 		msg: 'Rate has been updated successfully',
