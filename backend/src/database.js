@@ -9,6 +9,7 @@ const userSchema = new Schema({
 	firstname: String,
 	lastname: String,
 	email: String,
+	admin: Boolean,
 });
 
 const siteSchema = new Schema({
