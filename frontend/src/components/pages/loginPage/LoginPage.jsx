@@ -12,6 +12,7 @@ export function LoginPage() {
 	const [usernameError, setUsernameError] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState('');
+	const [userid, setUserid] = useState();
 	const hour = 60 * 60 * 1000;
 
 	const navigate = useNavigate();
@@ -43,10 +44,16 @@ export function LoginPage() {
 					tokens.setToken('userDetails', token);
 					navigate('/user');
 				} else if (response.msg['user']) setUsernameError(response.msg.user);
-				else if (response.msg['password'])
+				else if (response.msg['password']) {
 					setPasswordError(response.msg.password);
+					// setUserid(response.msg.userid);
+				}
 			});
 		}
+	};
+
+	const onResetClicked = () => {
+		userApiCommunicator.updatePassword(userid);
 	};
 
 	const checkAutoLogin = () => {
@@ -94,6 +101,11 @@ export function LoginPage() {
 				<button className='login-page-button' onClick={onSignUpClicked}>
 					Sign Up
 				</button>
+				{userid && (
+					<button className='login-page-button' onClick={onResetClicked}>
+						Reset Password
+					</button>
+				)}
 			</div>
 		</div>
 	);

@@ -6,6 +6,8 @@ export const userApiCommunicator = {
 	load,
 	loadAll,
 	updateAdmins,
+	updatePassword,
+	remove,
 };
 
 function login(username, password) {
@@ -39,6 +41,19 @@ function loadAll() {
 
 function updateAdmins(users) {
 	return apiCommunicator.put('user', users).then(response => {
+		return response;
+	});
+}
+
+function updatePassword(userid) {
+	console.log(userid);
+	return apiCommunicator.put('password', { userid }).then(response => {
+		return response;
+	});
+}
+
+function remove(userid) {
+	return apiCommunicator.del('user', userid).then(response => {
 		return response;
 	});
 }

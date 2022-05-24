@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-mongoose.connect('mongodb://localhost/web-navigation', { family: 4 });
+mongoose.connect(
+	'mongodb+srv://itayamit:DvkvsQAsuHrF3Uy@cluster0.nnygu.mongodb.net/?retryWrites=true&w=majority',
+	{ useNewUrlParser: true, useUnifiedTopology: true }
+);
 
 const userSchema = new Schema({
 	username: String,
@@ -23,6 +26,7 @@ const siteSchema = new Schema({
 	type: Number,
 	description: String,
 	location: { lat: Number, lng: Number },
+	url: String,
 });
 
 const rateSchema = new Schema({
@@ -30,6 +34,7 @@ const rateSchema = new Schema({
 	siteid: String,
 	rating: Number,
 	comment: String,
+	date: String,
 });
 
 const tripSchema = new Schema({

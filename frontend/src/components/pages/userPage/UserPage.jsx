@@ -59,6 +59,9 @@ export function UserPage() {
 		if (!token) {
 			alert('User has timed out. Please log in again');
 			navigate('/login');
+		} else {
+			tokens.removeToken('islogged');
+			tokens.setToken('islogged', true);
 		}
 		const userId = token.userId;
 		userApiCommunicator.load(userId).then(response => {
@@ -97,9 +100,7 @@ export function UserPage() {
 		tokens.removeToken('userDetails');
 		navigate('/login');
 	};
-	const onNavigateClicked = () => {
-		navigate('/navigate');
-	};
+	const onNavigateClicked = () => {};
 	const onBrowseClicked = () => {
 		navigate('/browse');
 	};

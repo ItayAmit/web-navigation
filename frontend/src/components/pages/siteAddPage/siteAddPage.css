@@ -68,3 +68,8 @@
 	border-color: #fff;
 	font-size: 20px;
 }
+
+.site-page-url {
+	color: red;
+	text-decoration: none;
+}

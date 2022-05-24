@@ -23,3 +23,14 @@
 .site-card-row {
 	margin-bottom: 0px;
 }
+
+.site-card-url {
+	width: 200px;
+	height: 20px;
+	display: inline-block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-break: keep-all;
+	color: red;
+	text-decoration: none;
+}

@@ -22,6 +22,7 @@ export function AdminPage() {
 	const [durations, setDurations] = useState();
 	const [types, setTypes] = useState();
 	const [del, setDel] = useState(false);
+	const [selectedUser, setSelectedUser] = useState();
 
 	useEffect(() => {
 		keyApiCommunicator.getValuesFromKey('districts').then(response => {
@@ -57,6 +58,9 @@ export function AdminPage() {
 			siteApiCommunicator.find().then(response => {
 				setSites(response.sites);
 			});
+			userApiCommunicator.loadAll().then(response => {
+				setHiddenUsers(response.users);
+			});
 			setDel(false);
 		}
 	}, [del]);
@@ -83,6 +87,11 @@ export function AdminPage() {
 		navigate('/user');
 	};
 
+	const onDeleteUserClicked = () => {
+		userApiCommunicator.remove(selectedUser._id);
+		setDel(true);
+	};
+
 	return (
 		<div className='admin-container'>
 			<div className='admin-header'>
@@ -92,13 +101,23 @@ export function AdminPage() {
 				<div className='admin-users-management'>
 					<div className='admin-users-list'>
 						{users?.map((user, index) => (
-							<UserCard key={index} user={user} />
+							<UserCard
+								key={index}
+								user={user}
+								highlighted={selectedUser && selectedUser._id === user._id}
+								onClick={setSelectedUser}
+							/>
 						))}
 					</div>
 					<div className='admin-users-submition'>
 						<button className='admin-button' onClick={onUpdateClicked}>
 							Update
 						</button>
+						{selectedUser && (
+							<button className='admin-button' onClick={onDeleteUserClicked}>
+								Delete
+							</button>
+						)}
 					</div>
 				</div>
 				<div className='admin-sites-management'>

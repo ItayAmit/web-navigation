@@ -71,6 +71,7 @@ app.post('/login', async (req, res) => {
 				res.status(httpStatus.BAD_REQUEST).json({
 					msg: {
 						password: `Password for user ${username} is incorrect`,
+						userid: user._id,
 					},
 				});
 			}
@@ -112,6 +113,23 @@ app.put('/user', async (req, res) => {
 	}
 });
 
+app.put('/password', async (req, res) => {
+	const { userid } = req.body;
+	const user = await User.findOne({ _id: userid });
+	const randomString = Math.random().toString(36).slice(-8);
+	window.open(`mailto:${user.email}?subject=NewPassword&body=${randomString}`);
+	console.log(randomString);
+	// bcrypt.hash(password, saltRounds, async function (err, hash) {
+	// 	await User.findOneAndUpdate({_id: userid}, {password: hash});
+	// });
+});
+
+app.delete('/user/:id', async (req, res) => {
+	const { id } = req.params;
+	if (!id) return;
+	await User.deleteOne({ _id: id });
+});
+
 app.post('/addsite', async (req, res) => {
 	const {
 		userid,
@@ -124,6 +142,7 @@ app.post('/addsite', async (req, res) => {
 		type,
 		description,
 		location,
+		url,
 	} = req.body;
 	const site = new Site({
 		userid,
@@ -136,6 +155,7 @@ app.post('/addsite', async (req, res) => {
 		type,
 		description,
 		location,
+		url,
 	});
 	const siteNameExists = await Site.exists({ name });
 	if (siteNameExists) {
@@ -218,12 +238,13 @@ app.delete('/sites/:siteid', async (req, res) => {
 });
 
 app.post('/rate', async (req, res) => {
-	const { userid, siteid, rating, comment } = req.body;
+	const { userid, siteid, rating, comment, date } = req.body;
 	const rate = new Rate({
 		userid,
 		siteid,
 		rating,
 		comment,
+		date,
 	});
 	await rate.save();
 	res.status(httpStatus.OK).json({
@@ -233,7 +254,7 @@ app.post('/rate', async (req, res) => {
 
 app.put('/rate', async (req, res) => {
 	const { userid, siteid, rating, comment } = req.body;
-	await Rate.findOneAndUpdate({ userid, siteid }, { rating, comment });
+	await Rate.findOneAndUpdate({ userid, siteid }, { rating, comment, date });
 	res.status(httpStatus.OK).json({
 		msg: 'Rate has been updated successfully',
 	});

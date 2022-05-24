@@ -4,6 +4,7 @@ import { SiteCard } from '../../siteCard';
 import { keyApiCommunicator } from '../../../api/keyApiCommunicator';
 import { searchApiCommunicator } from '../../../api/searchApiCommunicator';
 import { siteApiCommunicator } from '../../../api/siteApiCommunicator';
+import { tokenFunctions as tokens } from '../../../localTokens/tokenFunctions';
 import familyHiking from '../../../images/familyhiking.jpg';
 import coupleHiking from '../../../images/couplehiking.jpg';
 import generalHiking from '../../../images/generalhiking.jpg';
@@ -78,16 +79,22 @@ export function HomePage() {
 		setWeeklySites(sites.filter(site => site.weekly));
 	}, [weeklySearches]);
 
-	useEffect(() => {
-		console.log(weeklySites.length);
-	}, [weeklySites]);
-
 	const onLoginClicked = () => {
 		navigate('/login');
 	};
 
 	const onRegisterClicked = () => {
 		navigate('/register');
+	};
+
+	const onViewClicked = () => {
+		tokens.setToken('islogged', false);
+		tokens.removeToken('siteid');
+		const siteDetails = {
+			siteid: selectedSite._id,
+		};
+		tokens.setToken('siteid', siteDetails);
+		navigate('/sitepage');
 	};
 
 	return (
@@ -138,6 +145,16 @@ export function HomePage() {
 							/>
 						))}
 					</div>
+					{selectedSite && (
+						<div className='home-page-submition'>
+							<button
+								className='home-page-navigation-button'
+								onClick={onViewClicked}
+							>
+								View
+							</button>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

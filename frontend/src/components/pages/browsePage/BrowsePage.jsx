@@ -99,7 +99,11 @@ export function BrowsePage() {
 	};
 
 	const sortSites = () => {
-		hiddenSites.sort((a, b) => b.numberOfRatings - a.numberOfRatings);
+		hiddenSites.sort((a, b) =>
+			a.rating === b.rating
+				? b.numberOfRatings - a.numberOfRatings
+				: b.rating - a.rating
+		);
 	};
 
 	const setSelectedCard = site => {
@@ -131,6 +135,15 @@ export function BrowsePage() {
 		};
 		tokens.setToken('siteid', siteDetails);
 		navigate('/rate');
+	};
+
+	const onSitePageClicked = () => {
+		if (tokens.getToken('siteid')) tokens.removeToken('siteid');
+		const siteDetails = {
+			siteid: selectedSite._id,
+		};
+		tokens.setToken('siteid', siteDetails);
+		navigate('/sitepage');
 	};
 
 	return (
@@ -168,14 +181,13 @@ export function BrowsePage() {
 							site={site}
 							onClick={setSelectedCard}
 							highlighted={selectedSite && selectedSite._id === site._id}
-							rating={site.rating}
-							numberOfRatings={site.numberOfRatings}
 							districts={districts}
 							seasons={seasons}
 							difficulties={difficulties}
 							distances={distances}
 							durations={durations}
 							types={types}
+							showRating={true}
 						/>
 					))}
 				</div>
@@ -200,6 +212,13 @@ export function BrowsePage() {
 					hidden={!selectedSite}
 				>
 					Rate
+				</button>
+				<button
+					className='browse-site-submition-button'
+					onClick={onSitePageClicked}
+					hidden={!selectedSite}
+				>
+					View
 				</button>
 			</div>
 		</div>

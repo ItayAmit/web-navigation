@@ -23,6 +23,7 @@ export function SiteAddPage() {
 	const [duration, setDuration] = useState(-1);
 	const [type, setType] = useState(-1);
 	const [description, setDescription] = useState('');
+	const [url, setUrl] = useState();
 
 	const [districts, setDistrics] = useState();
 	const [seasons, setSeasons] = useState();
@@ -93,7 +94,8 @@ export function SiteAddPage() {
 					duration,
 					type,
 					description,
-					marker
+					marker,
+					url
 				)
 				.then(response => {
 					if (response.msg['name']) setSiteNameError(response.msg.name);
@@ -153,6 +155,12 @@ export function SiteAddPage() {
 						maxLength={250}
 						value={description}
 						onChange={onDescriptionChanged}
+					/>
+					<PageInput
+						title='Insert image url'
+						placeholder='www.example.com'
+						value={url}
+						onChange={setUrl}
 					/>
 				</div>
 				<div className='site-add-map'>

@@ -46,8 +46,13 @@ export function RatePage() {
 	}, [rate]);
 
 	const onSubmitClicked = () => {
-		if (isNew) rateApiCommunicator.submit(userid, siteid, rating, comment);
-		else rateApiCommunicator.update(userid, siteid, rating, comment);
+		const day = String(new Date().getDate()).padStart(2, '0');
+		const month = String(new Date().getMonth() + 1).padStart(2, '0'); //January is 0!
+		const year = new Date().getFullYear();
+		const today = `${day}/${month}/${year}`;
+		if (isNew)
+			rateApiCommunicator.submit(userid, siteid, rating, comment, today);
+		else rateApiCommunicator.update(userid, siteid, rating, comment, today);
 		navigate('/browse');
 	};
 	const onCommentChanged = event => {
